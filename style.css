@@ -93,7 +93,7 @@ body{
     background: #F2F6F8;
     color: #0F0F0F;
     top: 53px;
-    height: 93vh;
+    height: 100vh;
     border-radius: 30px 30px 0px 0px;
     transition: 300ms;
 }
@@ -125,21 +125,21 @@ body{
         cursor: pointer;
     }
     
-    .menu-btn:hover{
+    .menu-btn-click{
         border: none;
     }
 
-    .menu-btn:hover .menu:nth-child(2){
+    .menu-btn-click .menu:nth-child(2){
         visibility: hidden;
         transition: 10ms;
     }
 
-    .menu-btn:hover .menu:nth-child(1){
+    .menu-btn-click .menu:nth-child(1){
         width: 115%;
         transform: rotate(44deg) translate(4px,10.5px);
     }
     
-    .menu-btn:hover .menu:nth-child(3){
+    .menu-btn-click .menu:nth-child(3){
         width: 115%;
         transform: rotate(-44deg) translate(4px,-10.5px);
     }

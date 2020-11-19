@@ -17,11 +17,13 @@ let uiElements = (function(){
             dom.inner.style.top='100vh';
             dom.navLinks.map((cur)=>cur.classList.add('nav-links-show'))
             dom.navUl.classList.add('nav-links-center');
+            dom.menuBtn.classList.add('menu-btn-click');
             menu=false;
         } else {
             dom.inner.style.top='53px';
             dom.navLinks.map((cur)=>cur.classList.remove('nav-links-show'))
             dom.navUl.classList.remove('nav-links-center');
+            dom.menuBtn.classList.remove('menu-btn-click');
             menu=true;
         }
     }
