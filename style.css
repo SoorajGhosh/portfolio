@@ -121,8 +121,9 @@ body{
     display: inline-block;
     position: relative;
     width: 90%;
-    padding: 100px 10px;
-    border: 1px solid black;
+    height: 80vh;
+    padding: 50px 10px;
+    /* border: 1px solid black; */
 }
 
 
@@ -145,7 +146,7 @@ body{
 
 /* =========================ABOUT========================== */
 .about{
-    /* display: none; */
+    height: auto;
 }
 
 .about-card{
@@ -183,30 +184,74 @@ body{
 
 /* ================================PROJECT=============================== */
 
+.project{
+    height: auto;
+}
+
 .project-title{
     font-size: 3.5rem;
     font-weight: bold;
+    margin-bottom: 20px;
 }
 
 .project-area{
     display: inline-block;
+    position: relative;
     margin: auto;
-    border: 1px solid black;
+    height: auto;
+    /* border: 1px solid black; */
 }
 
 .project-arrow{
     display: inline-block;
-    margin: 5px;
-    padding: 5px;
-    border: 1px solid black;
+    position: relative;
+    top: 175px;
+    margin: 0 20px;
+    padding: auto;
+    /* border: 1px solid black; */
 }
+
+.project-arrow img{
+    height: 50px;
+    width: 50px;
+}
+
+#project-arrow-left{
+    float: left;
+}
+
+#project-arrow-right{
+    float: right;
+}
+
 .project-frame{
     display: inline-block;
+    position: relative;
     height: 400px;
     width: 900px;
     border: 5px solid #0F0F0F;
-    margin: 20px auto;
+    margin: 10px auto;
     border-radius: 20px;
+}
+
+.project-btn{
+    background: #1EB4F3;
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #F2F6F8;
+    height: 40px;
+    width: 140px;
+    border-radius: 20px;
+    margin: 5px 10px;
+    transition: 300ms;
+}
+
+.project-btn:hover{
+    font-size: 1.1rem;
+    background: #F2F6F8;
+    color: #0F0F0F;
+    border: 3px solid #0F0F0F;
 }
 
 .project-subtext{
@@ -221,6 +266,39 @@ body{
 /* ===============================CONTACT================================ */
 .socials{
     list-style-type: none;
+    position: relative;
+    margin: auto;
+    width: 300px;
+    top: 10%;
+}
+
+.socials li{
+    margin: 10px auto;
+    padding: 5px;
+}
+
+.social-link{
+    display: inline-block;
+    position: relative;
+    padding: 2px;
+    width: 160px;
+}
+
+.social-img{
+    position: relative;
+    float: left;
+    height: 40px;
+    width: 40px;
+}
+
+.social-text{
+    position: relative;
+    float: left;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: black;
+    padding: 5px;
+    margin: 5px;
 }
 
 
