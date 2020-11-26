@@ -11,7 +11,7 @@ let uiElements = (function(){
         navUl : document.querySelector('.nav-ul'),
     }
 
-    //The inner element slides down
+    //The inner element slides down in mobile view
     const innerDive = function(){
         if (menu){
             dom.inner.style.top='100vh';
@@ -20,7 +20,7 @@ let uiElements = (function(){
             dom.menuBtn.classList.add('menu-btn-click');
             menu=false;
         } else {
-            dom.inner.style.top='53px';
+            dom.inner.style.top='0';
             dom.navLinks.map((cur)=>cur.classList.remove('nav-links-show'))
             dom.navUl.classList.remove('nav-links-center');
             dom.menuBtn.classList.remove('menu-btn-click');

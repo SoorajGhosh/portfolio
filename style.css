@@ -1,8 +1,13 @@
 *{
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
 	font: 1em Arial, serif;
-	box-sizing: border-box;
+    text-decoration: none;
+    box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
 }
 
 body{
@@ -14,25 +19,32 @@ body{
     display: inline-block;
     background: #1EB4F3;
     color:white;
-	height: 100vh;
-	width: 100vw;
+    padding: 5px;
+    width: 100%;
     text-align: center;
-    align-items: center;
-    vertical-align: middle;
-    overflow: hidden;
 }
+
+/* ===============NavBar==================== */
 .nav{
     position: relative;
+    display: inline-block;
+    width: 95%;
+}
+
+.nav-ul{
+    position: relative;
+    display: block;
+    float: right;
+    right: 20px;
+    margin: 10px 0px;
 }
 .nav-item{
     text-decoration: none;
-    display: block;
+    display: inline-block;
     position: relative;
     font-size: 1.3em;
-    font-weight: bold;
-    float: right;
     padding: 5px 0px;
-    margin: 10px 30px;
+    margin: 0px 10px;
     cursor: pointer;
     text-align: center;
 }
@@ -56,16 +68,14 @@ body{
 .home-btn{
     display: block;
     position: relative;
+    height: 42px;
+    width: 45px;
     float: left;
-    padding: 5px 8px ;
-    margin: 1px 3px;
+    left: 20px;
+    padding: 0px;
+    margin: 5px;
     cursor: pointer;
     text-align: center;
-}
-
-.home-btn:hover{
-    padding: 4px 8px;
-    border: none;
 }
 
 .home-btn img {
@@ -78,6 +88,7 @@ body{
     transition: 200ms ease-in-out;
 }
 
+
 .home-btn img:hover {
     height: 42px;
     width: 44px;    
@@ -87,15 +98,129 @@ body{
     display: none;
 }
 
+
+
+/* ==================Inner Cotainer==================== */
 .inner{
     display: block;
     position: relative;
     background: #F2F6F8;
     color: #0F0F0F;
-    top: 53px;
-    height: 100vh;
-    border-radius: 30px 30px 0px 0px;
-    transition: 300ms;
+    margin: 0px  auto;
+    width: 100%;
+    padding: 40px 0px;
+    border-radius: 15px ;
+    transition: 700ms;
+    text-align: center;
+}
+
+
+
+/* =========================SECTION======================== */
+.section{
+    display: inline-block;
+    position: relative;
+    width: 90%;
+    padding: 100px 10px;
+    border: 1px solid black;
+}
+
+
+
+/* =========================INTRO========================== */
+.intro{
+
+}
+
+.intro-title{
+    font-size: 6.5em;
+    font-weight: bold;
+}
+
+.intro-subtext{
+    font-size: 3.5em;
+}
+
+
+
+/* =========================ABOUT========================== */
+.about{
+    /* display: none; */
+}
+
+.about-card{
+    position: relative;
+    display: inline-block;
+    margin: 20px 10px;
+    width: 300px;
+    height: 410px;
+    top: 10%;
+    border-radius: 20px;
+    border: 2px solid #0F0F0F;
+}
+
+.about-card-title{
+    font-size: 2.5em;
+    font-weight: bold; 
+}
+
+.about-card-content{
+    position: relative;
+    display: block;
+    margin: 8px;
+    width: 280px;
+    height: 70px;
+    border-radius: 15px;
+    background: #1EB4F3;
+    transition: 1s;
+}
+
+.about-card:hover .about-card-content{
+    height: 343px;
+}
+
+
+
+/* ================================PROJECT=============================== */
+
+.project-title{
+    font-size: 3.5rem;
+    font-weight: bold;
+}
+
+.project-area{
+    display: inline-block;
+    margin: auto;
+    border: 1px solid black;
+}
+
+.project-arrow{
+    display: inline-block;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid black;
+}
+.project-frame{
+    display: inline-block;
+    height: 400px;
+    width: 900px;
+    border: 5px solid #0F0F0F;
+    margin: 20px auto;
+    border-radius: 20px;
+}
+
+.project-subtext{
+    width: 900px;
+    margin: 5px auto;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+
+
+/* ===============================CONTACT================================ */
+.socials{
+    list-style-type: none;
 }
 
 
@@ -104,11 +229,19 @@ body{
 
 
 
-
+/* ===============================RESPONSIVE======================== */
 
 
 @media only screen and (max-width: 600px){
 
+    .container{
+        padding: 5px 0px;
+        overflow: auto;
+    }
+
+
+
+    /* =========================NavBar===================== */
     .nav-links{
         display: none;
     }
@@ -153,10 +286,19 @@ body{
         margin: 11.5% 5%;
         transition: 300ms;
     }
+
+    .home-btn{
+        margin-left: 0px;
+    }
+    
+    .nav-ul{
+        display: none;
+    }
     
     .nav-links-center{
         position: relative;
         display: inline-block;
+        float: none;
         text-align: center;
         align-items: center;
         top: 30vh;
@@ -171,7 +313,31 @@ body{
         display: inline-block;
         text-align: center;
         float: none;
-        /* border: 1px solid black; */
+    }
+
+
+    /* =======================INNER================================ */
+    .inner{
+        border-radius: 20px;
+    }
+
+
+    /* ===============ABOUT RESPONSIVE=============================== */
+    .about-card{
+        position: relative;
+        display: block;
+        margin: 20px auto;
+        width: 200px;
+        height: 310px;
+        top: 10%;
+        border-radius: 15px;
+        border: 2px solid #0F0F0F;
+    }
+
+    .about-card-content{
+        height: 243px;
+        width: 180px;
+        border-radius: 10px;
     }
 }
 
