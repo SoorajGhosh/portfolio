@@ -1,3 +1,9 @@
+:root{
+    --primary-blue: #1EB4F3;
+    --primary-black: #0F0F0F;
+    --primary-white: #F2F6F8;
+}
+
 *{
     padding: 0;
     margin: 0;
@@ -5,6 +11,34 @@
     text-decoration: none;
     box-sizing: inherit;
 }
+
+
+/* ======================SCROLLBAR========================= */
+
+/* 
+::-webkit-scrollbar {
+    width: 6px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #555;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #000000;
+} */
+
+
+
 
 html {
   box-sizing: border-box;
@@ -17,7 +51,7 @@ body{
 .container{
     position: relative;
     display: inline-block;
-    background: #1EB4F3;
+    background: var(--primary-blue);
     color:white;
     padding: 5px;
     width: 100%;
@@ -57,7 +91,7 @@ body{
     left: 0px;
     height: 4px;
     border-radius: 3px;
-    background: #F2F6F8;
+    background: var(--primary-white);
     transition: 300ms;
 }
 
@@ -82,7 +116,7 @@ body{
     display: inline-block;
     height: 40px;
     width: 43px;
-    border: 3px solid #0F0F0F;
+    border: 3px solid var(--primary-black);
     padding: 2px;
     border-radius: 5px;
     transition: 200ms ease-in-out;
@@ -104,8 +138,8 @@ body{
 .inner{
     display: block;
     position: relative;
-    background: #F2F6F8;
-    color: #0F0F0F;
+    background: var(--primary-white);
+    color: var(--primary-black);
     margin: 0px  auto;
     width: 100%;
     padding: 40px 0px;
@@ -157,7 +191,7 @@ body{
     height: 410px;
     top: 10%;
     border-radius: 20px;
-    border: 2px solid #0F0F0F;
+    border: 2px solid var(--primary-black);
 }
 
 .about-card-title{
@@ -172,7 +206,7 @@ body{
     width: 280px;
     height: 70px;
     border-radius: 15px;
-    background: #1EB4F3;
+    background: var(--primary-blue);
     transition: 1s;
 }
 
@@ -202,18 +236,49 @@ body{
     /* border: 1px solid black; */
 }
 
+.project-details{
+    position: absolute;
+    display: block;
+    z-index: 1;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    /* border: 1px solid black; */
+}
+
+.project-details-btn{
+    background: var(--primary-white);
+    border: 5px solid var(--primary-black);
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--primary-black);
+    height: 40px;
+    width: 160px;
+    border-radius: 20px;
+    margin: 5px 10px;
+    transition: 300ms;
+}
+
+.project-details-btn:hover {
+    transform: scale(1.2);
+}
+
 .project-arrow{
     display: inline-block;
     position: relative;
     top: 175px;
     margin: 0 20px;
     padding: auto;
-    /* border: 1px solid black; */
 }
 
 .project-arrow img{
     height: 50px;
     width: 50px;
+    transition: 300ms;
+}
+
+.project-arrow:hover img{
+    transform: scale(1.2);
 }
 
 #project-arrow-left{
@@ -229,17 +294,17 @@ body{
     position: relative;
     height: 400px;
     width: 900px;
-    border: 5px solid #0F0F0F;
-    margin: 10px auto;
+    border: 5px solid var(--primary-black);
+    margin: 20px auto 10px auto;
     border-radius: 20px;
 }
 
 .project-btn{
-    background: #1EB4F3;
-    border: none;
+    background: var(--primary-blue);
+    border: 3px;
     font-size: 1rem;
     font-weight: bold;
-    color: #F2F6F8;
+    color: var(--primary-white);
     height: 40px;
     width: 140px;
     border-radius: 20px;
@@ -249,9 +314,9 @@ body{
 
 .project-btn:hover{
     font-size: 1.1rem;
-    background: #F2F6F8;
-    color: #0F0F0F;
-    border: 3px solid #0F0F0F;
+    background: var(--primary-white);
+    color: var(--primary-black);
+    border: 3px solid var(--primary-black);
 }
 
 .project-subtext{
@@ -329,7 +394,7 @@ body{
         display: block;
         width: 43px;
         height: 40px;
-        border: 3px solid #0F0F0F;
+        border: 3px solid var(--primary-black);
         border-radius: 5px;
         float: right;
         margin: 5px 8px;
@@ -359,7 +424,7 @@ body{
         position: relative;
         width: 90%;
         height: 6px;
-        background: #0F0F0F;
+        background: var(--primary-black);
         border-radius: 20px;
         margin: 11.5% 5%;
         transition: 300ms;
@@ -409,7 +474,7 @@ body{
         height: 310px;
         top: 10%;
         border-radius: 15px;
-        border: 2px solid #0F0F0F;
+        border: 2px solid var(--primary-black);
     }
 
     .about-card-content{
