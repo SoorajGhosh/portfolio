@@ -187,6 +187,27 @@ button{
     font-size: 3.5em;
 }
 
+.intro-text{
+    font-size: 0.9rem;
+    margin: 50px auto;
+}
+
+.intro-btn{
+    color: var(--primary-white);
+    font-size: 0.9rem;
+    margin: 10px auto;
+    padding: 5px 8px;
+    border: none;
+    /* border: 2px solid var(--primary-black); */
+    border-radius: 5px;
+    background: var(--primary-blue);
+    transition: 300ms;
+}
+
+.intro-btn:hover {
+    transform: scale(1.1);
+}
+
 
 
 /* =========================ABOUT========================== */
@@ -202,7 +223,7 @@ button{
     height: 410px;
     top: 10%;
     border-radius: 20px;
-    border: 2px solid var(--primary-black);
+    border: 5px solid var(--primary-black);
 }
 
 .about-card-title{
@@ -213,16 +234,16 @@ button{
 .about-card-content{
     position: relative;
     display: block;
-    margin: 8px;
-    width: 280px;
-    height: 70px;
+    margin: auto;
+    width: 96%;
+    height: 15%;
     border-radius: 15px;
     background: var(--primary-blue);
     transition: 1s;
 }
 
 .about-card:hover .about-card-content{
-    height: 343px;
+    height: 87%;
 }
 
 
@@ -486,23 +507,35 @@ button{
         font-size: 1.5rem;
     }
 
+    .intro-text{
+        font-size: 0.85rem;
+        margin: 30px auto;
+    }
 
     /* ===============ABOUT RESPONSIVE=============================== */
 
     .about-card{
         position: relative;
-        display: block;
-        margin: 20px auto;
-        width: 200px;
-        height: 310px;
+        display: none;
+        margin: 20px auto 80px auto;
+        width: 180px;
+        height: 290px;
         top: 10%;
         border-radius: 15px;
-        border: 3px solid var(--primary-black);
+        border: 4px solid var(--primary-black);
+    }
+
+    .main-card{
+        position: relative;
+        width: 200px;
+        height: 310px;
+        display: inline-block;
+        transform: scale(1.2);
     }
 
     .about-card-content{
         height: 83%;
-        width: 94%;
+        width: 95%;
         margin: auto;
         border-radius: 10px;
     }
@@ -513,6 +546,12 @@ button{
 
 
     /* ===================================PROJECTS RESPONSIVE===================== */
+        
+    .project-title{
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
 
     .project-area{
         width: 100%;
