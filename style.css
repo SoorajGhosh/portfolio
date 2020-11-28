@@ -63,7 +63,7 @@ button{
     display: inline-block;
     background: var(--primary-blue);
     color: var(--primary-white);
-    padding: 5px;
+    padding: 0 5px 5px 5px;
     width: 100%;
     text-align: center;
 }
@@ -414,22 +414,58 @@ button{
 
 @media only screen and (max-width: 600px){
 
-   
+    body{
+        overflow: hidden;
+    }
+    
     .container{
         padding: 5px 0px;
-        overflow: auto;
+        height: 100vh;
+        overflow-y: hidden;
+        overflow-x: hidden;
     }
 
     .section{
         width: 100%;
         height: auto;
-        padding: 20vh 10px;
+        padding: 26vh 10px;
         border-bottom: 2px solid var(--primary-grey);
     }
 
     /* =========================NavBar===================== */
     .nav-links{
-        display: none;
+        opacity: 0%;
+        transition: 2s;
+    }
+
+    .nav-ul{
+        position: absolute;
+        margin: 100px auto;
+        opacity: 0%;
+    }
+    
+    .nav-ul-center{
+        position: relative;
+        display: inline-block;
+        opacity: 100%;
+        float: none;
+        text-align: center;
+        align-items: center;
+        top: 25vh;
+        margin: 10px 0px;
+        height: 30vh;
+        left: 0vw;
+        width: 40vw;
+    }
+
+    .nav-links-show{
+        position: relative;
+        margin: 20px;
+        opacity: 100%;
+        display: inline-block;
+        text-align: center;
+        float: none;
+        transition: 2s;
     }
 
     .menu-btn{
@@ -474,38 +510,30 @@ button{
     }
 
     .home-btn{
+        left: 5px;
         margin-left: 0px;
     }
     
-    .nav-ul{
-        display: none;
-    }
     
-    .nav-links-center{
-        position: relative;
-        display: inline-block;
-        float: none;
-        text-align: center;
-        align-items: center;
-        top: 30vh;
-        margin: 10px 0px;
-        height: 30vh;
-        left: 0vw;
-        width: 40vw;
-    }
-
-    .nav-links-show{
-        position: relative;
-        display: inline-block;
-        text-align: center;
-        float: none;
-    }
-
 
     /* =======================INNER================================ */
     .inner{
+        height: 92vh;
+        padding: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
         border-radius: 20px;
+        transition: 500ms;
     }
+
+    .inner-hidden{
+        height: 0;
+        width: 40vw;
+        padding: 0;
+        opacity: 70%;
+        border-radius: 50vh;
+    }
+
 
 
     /* =========================INTRO RESPONSIVE==================== */
@@ -530,16 +558,20 @@ button{
     
     .about-container{
         position: relative;
+        width: 400%;
         height: auto;
+        left: -150%;
         padding: 20px;
+        overflow-x: auto;
     }
 
     .about-card{
         display: inline-block;
         position: relative;
-        margin: 40px auto;
+        margin: 40px 20px;
         width: 180px;
         height: 290px;
+        opacity: 75%;
         top: 10%;
         border-radius: 15px;
         border: 3px solid var(--primary-black);
@@ -548,6 +580,7 @@ button{
     .main-card{
         position: relative;
         transform: scale(1.2);
+        opacity: 100%;
         display: inline-block;
         border: 4px solid var(--primary-black);
     }
@@ -570,6 +603,10 @@ button{
 
     .about-card:hover .about-card-content{
         height: 15%;
+    }
+
+    .main-card:hover .about-card-content{
+        height: 85.5%;;
     }
 
 
@@ -601,7 +638,7 @@ button{
     }
         
     .project-details-btn:hover {
-        transform: scale(1.6);
+        transform: scale(1.12);
     }
 
     .project-arrow{

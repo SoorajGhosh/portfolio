@@ -14,15 +14,15 @@ let uiElements = (function(){
     //The inner element slides down in mobile view
     const innerDive = function(){
         if (menu){
-            dom.inner.style.top='100vh';
+            dom.inner.classList.add('inner-hidden');
             dom.navLinks.map((cur)=>cur.classList.add('nav-links-show'))
-            dom.navUl.classList.add('nav-links-center');
+            dom.navUl.classList.add('nav-ul-center');
             dom.menuBtn.classList.add('menu-btn-click');
             menu=false;
         } else {
-            dom.inner.style.top='0';
+            dom.inner.classList.remove('inner-hidden');
             dom.navLinks.map((cur)=>cur.classList.remove('nav-links-show'))
-            dom.navUl.classList.remove('nav-links-center');
+            dom.navUl.classList.remove('nav-ul-center');
             dom.menuBtn.classList.remove('menu-btn-click');
             menu=true;
         }
