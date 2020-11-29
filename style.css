@@ -413,9 +413,14 @@ button{
 
 
 @media only screen and (max-width: 600px){
+    
+    html{
+        box-sizing: content-box;
+    }
 
     body{
         overflow: hidden;
+        box-sizing: border-box;
     }
     
     .container{
@@ -426,6 +431,7 @@ button{
     }
 
     .section{
+        box-sizing: border-box;
         width: 100%;
         height: auto;
         padding: 26vh 10px;
@@ -445,17 +451,18 @@ button{
     }
     
     .nav-ul-center{
-        position: relative;
+        position: absolute;
         display: inline-block;
         opacity: 100%;
         float: none;
         text-align: center;
         align-items: center;
         top: 25vh;
-        margin: 10px 0px;
+        margin: 10px auto;
         height: 30vh;
         left: 0vw;
         width: 40vw;
+        z-index: 1;
     }
 
     .nav-links-show{
@@ -527,11 +534,7 @@ button{
     }
 
     .inner-hidden{
-        height: 0;
-        width: 40vw;
-        padding: 0;
-        opacity: 70%;
-        border-radius: 50vh;
+        opacity: 0%;
     }
 
 
