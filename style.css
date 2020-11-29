@@ -415,12 +415,12 @@ button{
 @media only screen and (max-width: 600px){
     
     html{
-        box-sizing: content-box;
+        box-sizing: initial;
     }
 
     body{
-        overflow: hidden;
         box-sizing: border-box;
+        height: 100vh;
     }
     
     .container{
@@ -431,7 +431,7 @@ button{
     }
 
     .section{
-        box-sizing: border-box;
+        /* box-sizing: border-box; */
         width: 100%;
         height: auto;
         padding: 26vh 10px;
@@ -525,7 +525,7 @@ button{
 
     /* =======================INNER================================ */
     .inner{
-        height: 92vh;
+        height: 91.5%;
         padding: 0;
         overflow-y: auto;
         overflow-x: hidden;
