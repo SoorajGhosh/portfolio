@@ -421,21 +421,16 @@ button{
     body{
         box-sizing: border-box;
         height: 100vh;
+        height: calc(var(--vh, 1vh) * 100);
     }
     
     .container{
         padding: 5px 0px;
-        height: 100vh;
+        height: 100%;
         overflow-y: hidden;
         overflow-x: hidden;
     }
 
-    .section{
-        width: 100%;
-        height: auto;
-        padding: 20vh 5px;
-        border-bottom: 2px solid var(--primary-grey);
-    }
 
     /* =========================NavBar===================== */
     .nav-links{
@@ -524,7 +519,7 @@ button{
 
     /* =======================INNER================================ */
     .inner{
-        height: 91.5%;
+        height: 92%;
         padding: 0;
         overflow-y: auto;
         overflow-x: hidden;
@@ -537,6 +532,12 @@ button{
     }
 
 
+    .section{
+        width: 100%;
+        height: auto;
+        padding: 20vh 5px;
+        border-bottom: 2px solid var(--primary-grey);
+    }
 
     /* =========================INTRO RESPONSIVE==================== */
         

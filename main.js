@@ -12,24 +12,15 @@ let uiElements = (function(){
         targetBtns : document.querySelectorAll('.target-btn')
     }
 
-    //The inner element slides down in mobile view
-    const innerDive = function(){
-        if (menu){
-            dom.inner.classList.add('inner-hidden');
-            dom.navLinks.map((cur)=>cur.classList.add('nav-links-show'))
-            dom.navUl.classList.add('nav-ul-center');
-            dom.menuBtn.classList.add('menu-btn-click');
-            menu=false;
-        } else {
-            dom.inner.classList.remove('inner-hidden');
-            dom.navLinks.map((cur)=>cur.classList.remove('nav-links-show'))
-            dom.navUl.classList.remove('nav-ul-center');
-            dom.menuBtn.classList.remove('menu-btn-click');
-            menu=true;
-        }
+    // Showing/Removing the NAV
+    const showNav = function(){
+        dom.inner.classList.toggle('inner-hidden');
+        dom.navLinks.map((cur)=>cur.classList.toggle('nav-links-show'))
+        dom.navUl.classList.toggle('nav-ul-center');
+        dom.menuBtn.classList.toggle('menu-btn-click');
     }
 
-    return {dom,innerDive}
+    return {dom,showNav}
 })(); 
 
 
@@ -40,11 +31,12 @@ let controller = (function(){
     function test(){console.log('Cleared');}
     
     // Event Listeners
-    dom.menuBtn.addEventListener('click', uiElements.innerDive);
+    dom.menuBtn.addEventListener('click', uiElements.showNav);
     dom.nav.addEventListener('click', function(e){
         e.preventDefault();
         const section = e.target.closest('.nav-target');
         if (!section) return;
+        uiElements.showNav();
         const sectionID = section.getAttribute('href')
         document.querySelector(sectionID).scrollIntoView({behavior:'smooth'});
     });
@@ -56,7 +48,9 @@ let controller = (function(){
 
 })();
 
-
+// Setting the Page height according to the phone's window in responsive. Solution SOURCE: https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 
 
