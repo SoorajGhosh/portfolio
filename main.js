@@ -9,6 +9,7 @@ let uiElements = (function(){
         nav : document.querySelector('.nav'),
         navLinks : Array.from(document.querySelectorAll('.nav-links')),
         navUl : document.querySelector('.nav-ul'),
+        targetBtns : document.querySelectorAll('.target-btn')
     }
 
     //The inner element slides down in mobile view
@@ -40,7 +41,19 @@ let controller = (function(){
     
     // Event Listeners
     dom.menuBtn.addEventListener('click', uiElements.innerDive);
-    
+    dom.nav.addEventListener('click', function(e){
+        e.preventDefault();
+        const section = e.target.closest('.nav-target');
+        if (!section) return;
+        const sectionID = section.getAttribute('href')
+        document.querySelector(sectionID).scrollIntoView({behavior:'smooth'});
+    });
+    dom.targetBtns.forEach((cur)=>cur.addEventListener('click', function(e){
+        e.preventDefault();
+        const sectionID = e.target.getAttribute('href')
+        document.querySelector(sectionID).scrollIntoView({behavior:'smooth'});
+    }))
+
 })();
 
 

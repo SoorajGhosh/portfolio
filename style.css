@@ -431,10 +431,9 @@ button{
     }
 
     .section{
-        /* box-sizing: border-box; */
         width: 100%;
         height: auto;
-        padding: 26vh 10px;
+        padding: 20vh 5px;
         border-bottom: 2px solid var(--primary-grey);
     }
 
