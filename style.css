@@ -1,11 +1,11 @@
 :root{
-    --primary-blue: #1EB4F3;
+    --primary-blue: rgba(164,91,254,1); /*#1EB4F3;*/
     --primary-black: #020024; /*#0F0F0F; */
     --primary-white: #F2F6F8;
     --primary-grey: #555;
     --primary-blue-horizontal-gradient: linear-gradient(122deg, rgba(2,0,36,1) 0%, rgba(54,153,255,1) 0%, rgba(45,128,219,1) 0%, rgba(164,91,254,1) 100%, rgba(194,250,250,1) 100%);
     --primary-blue-vertical-gradient: linear-gradient(45deg, rgba(2,0,36,1) 0%, rgba(54,153,255,1) 0%, rgba(45,128,219,1) 0%, rgba(164,91,254,1) 100%, rgba(194,250,250,1) 100%);
-    --primary-background: rgba(164,91,254,1);
+    --primary-background: rgba(93,113,233); /* rgba(164,91,254,1); */
 }
 
 *{
@@ -41,8 +41,23 @@
     background: #000000;
 } */
 
+/* ==============================ANIMATIONS======================= */
+
+@keyframes gradient-animation{
+    
+    0%{
+        background-position: 0% 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+    }
+    100%{
+        background-position: 0% 50%;
+    }
+}
 
 
+/* ================PAGE CSS========================= */
 
 html {
   box-sizing: border-box;
@@ -71,13 +86,15 @@ button{
     padding-top: 0;
     width: 100%;
     text-align: center;
+    background-size: 400% 400%;
+    animation: gradient-animation 4s ease-in-out 0s infinite alternate;
 }
 
 /* ===============NavBar==================== */
 .nav{
     position: relative;
     display: inline-block;
-    width: 95%;
+    width: 100%;
 }
 
 .nav-ul{
@@ -200,19 +217,22 @@ button{
 }
 
 .intro-btn{
+    position: relative;
+    display: inline-block;
     color: var(--primary-white);
     font-size: 0.9rem;
     margin: 10px auto;
-    padding: 5px 8px;
+    padding: 5px 10px;
     border: none;
     /* border: 2px solid var(--primary-black); */
     border-radius: 5px;
     background: var(--primary-background);
-    transition: 300ms;
+    transition:  all .2s linear;
 }
 
 .intro-btn:hover {
-    transform: scale(1.1);
+    transform: scale(1.02);
+    background: var(--primary-blue);
 }
 
 
@@ -250,7 +270,7 @@ button{
     width: 96%;
     height: 15%;
     border-radius: 15px;
-    background: var(--primary-background);
+    background: var(--primary-blue-vertical-gradient);
     transition: 1s;
 }
 
@@ -262,18 +282,6 @@ button{
     animation: gradient-animation 4s ease-in-out 0s infinite alternate;
 }
 
-@keyframes gradient-animation{
-    
-    0%{
-        background-position: 0% 50%;
-    }
-    50%{
-        background-position: 100% 50%;
-    }
-    100%{
-        background-position: 0% 50%;
-    }
-}
 
 
 /* ================================PROJECT=============================== */
@@ -452,6 +460,8 @@ button{
         height: 100%;
         overflow-y: hidden;
         overflow-x: hidden;
+        background-size: 400% 400%;
+        animation: gradient-animation 4s ease-in-out 0s infinite alternate;
     }
 
 
@@ -583,7 +593,7 @@ button{
 
     /* ===============ABOUT RESPONSIVE=============================== */
     
-    .about-responsive{          /*FIX THE WIDTH PROBLEM I.E. CARD SHIFTS TO NEXT LINE IF NOT FIT IN THE WIDTH*/
+    .about-responsive{          
         position: relative;
         display: block;
         height: auto;
@@ -592,6 +602,7 @@ button{
         overflow-x: auto;
         /* border: 1px solid black; */
     }
+
     /* make scrollbar transparent */
     .about-responsive::-webkit-scrollbar {
         width: 0px;
@@ -600,7 +611,7 @@ button{
 
     .about-container{
         position: relative;
-        width: calc(180px*5);
+        width: calc(75vw*3);
         height: auto;
         padding: 20px;
         overflow-x: auto;
@@ -618,14 +629,7 @@ button{
         top: 10%;
         border-radius: 15px;
         border: 3px solid var(--primary-black);
-    }
-
-    .main-card{
-        position: relative;
-        transform: scale(1.2);
-        opacity: 100%;
-        display: inline-block;
-        border: 4px solid var(--primary-black);
+        pointer-events: none;
     }
 
     .about-card-content{
@@ -639,20 +643,20 @@ button{
         font-size: 2em;
         font-weight: bold; 
     }
+    
+    .main-card{
+        position: relative;
+        transform: scale(1.2);
+        opacity: 100%;
+        display: inline-block;
+        border: 4px solid var(--primary-black);
+    }
 
     .main-card .about-card-content{
         height: 85.5%;
         background: var(--primary-blue-vertical-gradient);
         background-size: 400% 400%;
         animation: gradient-animation 4s ease-in-out 0s infinite alternate;
-    }
-
-    .about-card:hover .about-card-content{
-        height: 15%;
-    }
-
-    .main-card:hover .about-card-content{
-        height: 85.5%;;
     }
 
 
