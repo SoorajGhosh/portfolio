@@ -466,6 +466,10 @@ button{
 
 
     /* =========================NavBar===================== */
+    .nav{
+        width: 95%;
+    }
+
     .nav-links{
         opacity: 0%;
         transition: 2s;
@@ -636,6 +640,7 @@ button{
         height: 15%;
         width: 95%;
         margin: auto;
+        background: var(--primary-background);
         border-radius: 10px;
     }
 
