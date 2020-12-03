@@ -22,12 +22,12 @@
 /* 
 ::-webkit-scrollbar {
     width: 6px;
-	background-color: #F5F5F5;
+	background-color: var(--primary-white);
 }
 
 ::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #F5F5F5;
+	background-color: var(--primary-white);
     border-radius: 10px;
     border: 1px solid black;
 }
@@ -242,9 +242,78 @@ button{
     height: auto;
 }
 
+/* make scrollbar transparent */
+.about-container::-webkit-scrollbar  {
+    width: 0px;
+    background: transparent; 
+}
+/* 
+.about-container::-webkit-scrollbar {
+    width: 1px;
+	background-color: var(--primary-white);
+}
+
+.about-container::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    width: 2px;
+	background-color: var(--primary-white);
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.about-container::-webkit-scrollbar-thumb {
+    background-color: #555;
+    border-radius: 10px;
+}
+
+.about-container::-webkit-scrollbar-thumb:hover {
+    background: #000000;
+} */
+
+
+/* make scrollbar transparent */
+.about-container::-webkit-scrollbar  {
+    display: none; 
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.about-container {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.about-anchor{
+    position: relative;
+    display: inline-flex;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: var(--primary-white);
+    color: var(--primary-black);
+    border: 2px solid var(--primary-black);
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 0 0 0.5rem 0;
+    transition: 300ms;
+}
+.about-anchor:hover{
+    transform: scale(1.15);
+    background: var(--primary-blue);
+    color: var(--primary-white);
+    border: 2px solid var(--primary-blue);
+}
+
 .about-container{
     position: relative;
     height: 100%;
+    width: 90%;
+    margin: auto;
+    transition: 300ms;
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
 }
 
 .about-card{
@@ -253,9 +322,13 @@ button{
     margin: 20px 10px;
     width: 300px;
     height: 410px;
-    top: 10%;
+    transition: 300ms;
     border-radius: 20px;
     border: 5px solid var(--primary-black);
+    flex-shrink: 0;
+    scroll-snap-align: center;
+    scroll-behavior: smooth;
+    scroll-snap-stop: always;
 }
 
 .about-card-title{
@@ -596,44 +669,38 @@ button{
     }
 
     /* ===============ABOUT RESPONSIVE=============================== */
-    
-    .about-responsive{          
-        position: relative;
-        display: block;
-        height: auto;
-        left: -1.5%;
-        width: 103%;
-        overflow-x: auto;
-        /* border: 1px solid black; */
-    }
 
-    /* make scrollbar transparent */
-    .about-responsive::-webkit-scrollbar {
-        width: 0px;
-        background: transparent; 
-    }
 
     .about-container{
         position: relative;
-        width: calc(75vw*3);
-        height: auto;
-        padding: 20px;
+        padding: 0;
+        margin: auto;
+        width: 102%;
+        left: -1%;
+        height: 450px;
+        display: flex;
         overflow-x: auto;
-        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
         /* border: 1px solid black; */
     }
 
     .about-card{
-        display: inline-block;
-        position: relative;
-        margin: 20px;
-        width: 180px;
-        height: 290px;
-        opacity: 75%;
-        top: 10%;
         border-radius: 15px;
+        top: 0;
+        height: 80%;
+        margin: auto 10px;
         border: 3px solid var(--primary-black);
         pointer-events: none;
+        width: 240px;
+        flex-shrink: 0;
+        scroll-snap-align: center;
+        scroll-behavior: smooth;
+        scroll-snap-stop: always;
+    }
+
+    .about-card:target{
+        transform: scale(1.08);
     }
 
     .about-card-content{
