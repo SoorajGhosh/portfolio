@@ -221,17 +221,18 @@ button{
     display: inline-block;
     color: var(--primary-white);
     font-size: 0.9rem;
-    margin: 10px auto;
-    padding: 5px 10px;
+    font-weight: bold;
+    margin: 15px auto;
+    padding: 10px 20px;
     border: none;
-    /* border: 2px solid var(--primary-black); */
-    border-radius: 5px;
+    font-size: 1rem;
+    border-radius: 8px;
     background: var(--primary-background);
-    transition:  all .2s linear;
+    transition:  all .6s;
 }
 
 .intro-btn:hover {
-    transform: scale(1.02);
+    transform: scale(1.05);
     background: var(--primary-blue);
 }
 
@@ -282,9 +283,9 @@ button{
   scrollbar-width: none;  /* Firefox */
 }
 
-.about-anchor{
+.about_dot{
     position: relative;
-    display: inline-flex;
+    display: inline-block;
     width: 1.5rem;
     height: 1.5rem;
     background: var(--primary-white);
@@ -294,11 +295,19 @@ button{
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    margin: 0 0 0.5rem 0;
+    margin: 5px;
     transition: 300ms;
 }
-.about-anchor:hover{
-    transform: scale(1.15);
+/* 
+.about_dot:hover{
+    transform: scale(1.2);
+    background: var(--primary-blue);
+    color: var(--primary-white);
+    border: 2px solid var(--primary-blue);
+} */
+
+.about_dot-active{
+    transform: scale(1.2);
     background: var(--primary-blue);
     color: var(--primary-white);
     border: 2px solid var(--primary-blue);
@@ -355,6 +364,13 @@ button{
     animation: gradient-animation 4s ease-in-out 0s infinite alternate;
 }
 
+.about-card-active .about-card-content{
+    height: 87%;
+    transition: 2s;
+    background: var(--primary-blue-vertical-gradient);
+    background-size: 200% 200%;
+    animation: gradient-animation 4s ease-in-out 0s infinite alternate;
+}
 
 
 /* ================================PROJECT=============================== */
@@ -670,6 +686,9 @@ button{
 
     /* ===============ABOUT RESPONSIVE=============================== */
 
+    .about_dot{
+        margin: 3px;
+    }
 
     .about-container{
         position: relative;
