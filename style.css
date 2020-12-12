@@ -117,6 +117,12 @@ button{
     text-align: center;
 }
 
+.nav-target{
+    color: var(--primary-white);
+    height: 100%;
+    width: 100%;
+}
+
 .nav-links::after{
     content: '';
     position: absolute;
@@ -273,12 +279,12 @@ button{
 
 
 /* make scrollbar transparent */
-.about-container::-webkit-scrollbar  {
+.about-wrap::-webkit-scrollbar  {
     display: none; 
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
-.about-container {
+.about-wrap {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
@@ -313,16 +319,25 @@ button{
     border: 2px solid var(--primary-blue);
 }
 
-.about-container{
+.about-wrap{
     position: relative;
     height: 100%;
     width: 90%;
     margin: auto;
-    transition: 300ms;
-    display: flex;
-    overflow-x: auto;
+    overflow-x: hidden;
+    /* border: 1px solid red; */
+}
+
+.about-container{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    display: block;
+    white-space: nowrap;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
+    /* border: 1px solid black; */
 }
 
 .about-card{
@@ -334,7 +349,6 @@ button{
     transition: 300ms;
     border-radius: 20px;
     border: 5px solid var(--primary-black);
-    flex-shrink: 0;
     scroll-snap-align: center;
     scroll-behavior: smooth;
     scroll-snap-stop: always;
@@ -690,18 +704,22 @@ button{
         margin: 3px;
     }
 
+    .about-wrap{
+        position: relative;
+        width: 102%;
+        left: -1%;
+        margin: auto;
+        overflow-x: auto;
+    }
+
     .about-container{
         position: relative;
         padding: 0;
         margin: auto;
-        width: 102%;
-        left: -1%;
         height: 450px;
         display: flex;
-        overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         scroll-snap-type: x mandatory;
-        /* border: 1px solid black; */
     }
 
     .about-card{

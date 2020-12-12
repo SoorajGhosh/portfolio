@@ -135,49 +135,112 @@ function aboutFn(domEl){
         })
     })
     
+
     // ============ Infinite Scrolling of cards ================
+    
+    function infiniteScroll(){
+        const wrap= document.querySelector('.about-wrap');
+        const cardContainer= document.querySelector('.about-container');
+        const actualCards = Array.from(document.querySelectorAll('.about-card'));
+        const defaultInterval = 2000;
+        let interval = defaultInterval;
+        let index = 1;
+        let activeCardIndex;
+        let activeCard;
+        let activeCardXPos;
+        let allCardsXPosArr;
+    
+        // Widths of card and all cards together
+        const totalCardsWidth = (actualCards[index].offsetWidth)*actualCards.length;
+        const cardWidth = actualCards[index].clientWidth;
+    
+        let getCards = () => Array.from(document.querySelectorAll('.about-card'));
+    
+        let setActiveCard = (activeCardIdx) =>  {
+            activeCard = getCards()[activeCardIdx];
+            getCards().forEach(card=>card.classList.remove('about-card-active'));
+            activeCard?.classList.add('about-card-active');
+            activeCardIndex = getCards().indexOf(activeCard);
+            activeCardXPos = allCardsXPosArr[activeCardIdx]
+        };
+    
+    
+        // Adding Previous cards
+        const prevCardsClone = actualCards.map(function(card,i){
+            const cloneCard = actualCards[(actualCards.length-1)-i].cloneNode(true);
+            cloneCard.classList.add('prev-cards');
+            cardContainer.insertAdjacentElement('afterbegin',cloneCard);
+            return cloneCard
+        })
+    
+        // Adding Next cards
+        const nextCardsClone = actualCards.map(function(card){
+            const cloneCard = card.cloneNode(true);
+            cloneCard.classList.add('next-cards');
+            cardContainer.insertAdjacentElement('beforeend',cloneCard);
+            return cloneCard
+        })
+    
+    
+        //Getting all the x positions of all the cards including prev and next and declaring here bcz we will need it for positioning the active card x position
+        allCardsXPosArr = getCards().map((card,i)=>card.getBoundingClientRect().x);				
+    
+        // Seting the First Active card as the 0th card of the actual cards
+        setActiveCard(getCards().indexOf(actualCards[0]));			
+    
+        function movingCardContainer(xPos){
+            // cardContainer.style.transform = `translateX(${-xPos+wrap.getBoundingClientRect().x}px)`;		// card to the start of wrap 
+            cardContainer.style.transform = `translateX(${-xPos+((wrap.clientWidth)/2)}px)`;					// card to the middle of wrap
+        }
+    
+        // Moving the container to the 1st element of the actual array
+        movingCardContainer(activeCardXPos);	
+    
+    
+    
+        // Moving Left to Right
+        const moveToNextCard = () => {
+            cards = getCards();
+            if (activeCardIndex >= (cards.length - actualCards.length)){
+                cardContainer.style.transition = 'none';
+                setActiveCard(getCards().indexOf(actualCards[0]));
+                movingCardContainer(activeCardXPos);
+                interval=0;
+            } else {
+                activeCardIndex++;
+                setActiveCard(activeCardIndex);
+                cardContainer.style.transition = '.4s ease-out';
+                movingCardContainer(activeCardXPos);
+                interval=defaultInterval;
+            }
+            
+        };
+            
+        // SRC: https://stackoverflow.com/questions/3583724/how-do-i-add-a-delay-in-a-javascript-loop
+    
+        let idx = 1;                  						//  set your counter to 1
+    
+        function startMovingCardsContainer() {         		//  create a loop function
+        setTimeout(function() {   						//  call a 3s setTimeout when the loop is called
+            moveToNextCard();   							//  your code here
+            if (idx > 0) {           						//  if the counter < 10, call the loop function
+            startMovingCardsContainer();             		//  ..  again which will trigger another 
+            }                       						//  ..  setTimeout()
+        }, interval)
+        }
+    
+        startMovingCardsContainer();                   		//  start the loop
+    
+    }
+    
+    infiniteScroll();
+
     
     // Only for mobile view the observer is going to be work
     if (mobileView){
 
-        function aboutCardIntersectionFn(entries){
-            const [entry] = entries;
-    
-            // Add or remove the active card class depedning on if its intersecting (entering) or not (exiting)
-            if (entry.isIntersecting===true){
-                entry.target.classList.add("about-card-active");
-                const id = entry.target.id.split('-')[2];              // Getting the Id number fo slide
-                activateDot(id);
-            } else {
-                entry.target.classList.remove("about-card-active")
-            }
-        }
-
-        // About Card Observer
-        var aboutContainerObserver = new IntersectionObserver(aboutCardIntersectionFn, {root: domEl.aboutContainer, threshold:1, rootMargin:'0px'});
-        domEl.aboutCards.forEach(function(card){
-            aboutContainerObserver.observe(card);
-        })
     }
         
-    
-
-    //=============ABOUT===========================
-    // domEl.aboutSection.addEventListener('click', function(e){
-    //     e.preventDefault();
-    //     const active_card_id = e.target.closest('.about_dot')?.getAttribute('href');
-    //     if (!active_card_id) return;
-    //     console.log(active_card_id);
-    //     document.querySelector(active_card_id).scrollIntoView({behavior:'smooth'});
-    // })
-
-    //creating clones of ABout container
-    // let nextAboutContainer=[], prevAboutContainer=[];
-    // domEl.aboutCards.forEach((cur,i,arr)=>{
-    //     nextAboutContainer.push(domEl.aboutCards[i].cloneNode(true));
-    //     prevAboutContainer.unshift(domEl.aboutCards[i].cloneNode(true));
-    // })
-
 }
 
 
@@ -217,6 +280,138 @@ document.documentElement.style.setProperty('--vw', `${vw}px`);
 
 
 
+            
+
+
+/*
+
+
+            function createInfinte(activeCardIdx){
+            
+                let cards = document.querySelectorAll(".about-card");
+
+                // 1. Check the next card
+                let nextActive = cards[activeCardIdx+1];
+                // console.log('NextActive: ',nextActive);
+    
+                // 2. Check if the next card has a next or not 
+                let nextCard = cards[activeCardIdx+2];
+                // console.log('NextCard: ',nextCard);
+                
+                // 3. IF there no need to add new 
+                if (!nextCard){
+                    if (activeCardIdx+1 === cards.length-1){
+                        cloneCard = cards[0].cloneNode(true);
+                    } else {
+                        cloneCard = cards[activeCardIdx+1].cloneNode(true);
+                    }
+                    domEl.aboutContainer.insertAdjacentElement('beforeend',cloneCard);
+                    console.log(cards);
+                    // cards.push(cloneCard);
+                } 
+    
+                // 4. If not then add a new card 
+                // 5. Check if its the last card then add the first card from the list of cards.
+                // 6. If not then make sure that card to be added is the next card in the sequence
+
+            }
+    
+            function aboutCardIntersectionFn(entries){
+                const [entry] = entries;
+        
+                // Add or remove the active card class depedning on if its intersecting (entering) or not (exiting)
+                if (entry.isIntersecting===true){
+                    entry.target.classList.add("about-card-active");
+                    const idx = parseInt(entry.target.dataset.card);              // Getting the Id number fo slide
+                    createInfinte(idx);                                           // Infinite slide functionality goes here
+                    activateDot(idx);
+                } else {
+                    entry.target.classList.remove("about-card-active")      // removing the active card if intersecting goes false
+                }
+            }
+    
+            // About Card Observer
+            var aboutContainerObserver = new IntersectionObserver(aboutCardIntersectionFn, {root: domEl.aboutContainer, threshold:1, rootMargin:'0px'});
+            document.querySelectorAll('.about-card').forEach(function(card){
+                aboutContainerObserver.observe(card);
+            })
+*/
+
+
+
+
+/*
+    const interval = 3000;
+    const container = domEl.aboutContainer;
+    let cards = document.querySelectorAll('.about-card');
+    let index = 1;
+    let cardId;
+        
+    //Creating Clones to be added at the end and start of the container
+    const firstClone = cards[0].cloneNode(true);
+    const lastClone = cards[cards.length - 1].cloneNode(true);
+    
+    // Setting the ID of the clone cards in case we need to identify them later   
+    firstClone.id = 'first-clone';
+    lastClone.id = 'last-clone';
+    
+    // Addng the clones to the array of card in the container
+    container.append(firstClone);
+    container.prepend(lastClone);
+
+    // Card width which is going to be used for setting the moving the cotainer to the 2nd element of the array which is the actual first
+    const cardWidth = cards[index].clientWidth;
+
+    // Moving the contianer to show the first element first
+    container.style.transform = `translateX(${-cardWidth * index}px)`;
+        
+    // Getting the currents slides in the container
+    const getCards = () => document.querySelectorAll('.about-card');
+
+    // Moving Left to Right
+    const moveToNextCard = () => {
+        cards = getCards();
+        if (index >= cards.length - 1) return;
+        index++;
+        container.style.transition = '.7s ease-out';
+        container.style.transform = `translateX(${-cardWidth * index}px)`;
+    };
+    
+    // Moving Right to Left
+    const moveToPreviousCard = () => {
+        if (index <= 0) return;
+        index--;
+        container.style.transition = '.7s ease-out';
+        container.style.transform = `translateX(${-cardWidth * index}px)`;
+    };
+
+    //Automatic Moving slider function        
+    const startMovingCardsContainer = () => {
+        cardId = setInterval(() => {
+        moveToNextCard();
+        }, interval);
+    };
+
+    // Calling the function (later put it in a init function)
+    startMovingCardsContainer();
+  
+    // Adding the Rest of the slides transition after it reaches slide 1 clone  
+    container.addEventListener('transitionend', () => {
+        cards = getCards();
+        if (cards[index].id === firstClone.id) {
+            container.style.transition = 'none';
+            index = 1;
+            container.style.transform = `translateX(${-cardWidth * index}px)`;
+        }
+        
+        if (cards[index].id === firstClone.id) {
+            container.style.transition = 'none';
+            index = cards.length - 2;
+            container.style.transform = `translateX(${-cardWidth * index}px)`;
+        }
+    });
+    
+*/
 
 
 
@@ -230,18 +425,13 @@ document.documentElement.style.setProperty('--vw', `${vw}px`);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+            // let addCard=undefined;
+            // const cards = domEl.aboutCards;
+            // console.log(activeCardIdx, cards.length-2)
+            // if (activeCardIdx===cards.length-2){
+            //     addCard = cards[0].cloneNode(true);
+            // }
+            // addCard && domEl.aboutContainer.append(addCard)
 
 
 
