@@ -325,18 +325,20 @@ button{
     width: 90%;
     margin: auto;
     overflow-x: hidden;
+    cursor: grab;
     /* border: 1px solid red; */
 }
 
 .about-container{
     position: relative;
     height: 100%;
-    width: 100%;
+    width: fit-content;
     margin: auto;
     display: block;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
+    touch-action: none;
     /* border: 1px solid black; */
 }
 
@@ -709,7 +711,7 @@ button{
         width: 102%;
         left: -1%;
         margin: auto;
-        overflow-x: auto;
+        overflow-x: hidden;
     }
 
     .about-container{
@@ -717,7 +719,7 @@ button{
         padding: 0;
         margin: auto;
         height: 450px;
-        display: flex;
+        touch-action: none;
         -webkit-overflow-scrolling: touch;
         scroll-snap-type: x mandatory;
     }
@@ -730,7 +732,6 @@ button{
         border: 3px solid var(--primary-black);
         pointer-events: none;
         width: 240px;
-        flex-shrink: 0;
         scroll-snap-align: center;
         scroll-behavior: smooth;
         scroll-snap-stop: always;

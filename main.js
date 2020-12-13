@@ -92,63 +92,75 @@ function targetAnchorsFn(domEl){
 function aboutFn(domEl){
     
     //============ Dots Functionality ====================
-
-    // Creating the Dots for each Card
-    const createDots = function(cards){
-        cards.forEach((_,i) => { 
-            const dotHtml = `<a class="about_dot" href="#about-card-${i}" data-dot="${i}">${i+1}</a>`
-            domEl.aboutDotContainer.insertAdjacentHTML('beforeend', dotHtml)
-        });
-    }
-    createDots(domEl.aboutCards)
-
-    let dots = document.querySelectorAll('.about_dot');
-
-    // Function for activating the current card Dot
-    function activateDot(idx){
-        dots.forEach((dot, i) => {dot.classList.remove('about_dot-active')})    // Remoing any active dots before setting the active dot
-        document.querySelector(`.about_dot[data-dot="${idx}"]`).classList.add('about_dot-active');
-    }
-
-    // Click Event for each dot
-    dots.forEach((dot, i) => {
-        dot.addEventListener('click',(e)=>{
-            e.preventDefault();                 // Removing default behaviour
-            activateDot(i);
-        })
-    })
-
-    // Creating the Hover effect using js coz if not like this it causes problems in mobileview
-    dots.forEach((dot, i) => {
-        dot.addEventListener('mouseover',(e)=>{
-            e.preventDefault();                 
-            if (mobileView) return
-            e.target.classList.add('about_dot-active')
-        })
-    })
-
-    dots.forEach((dot, i) => {
-        dot.addEventListener('mouseout',(e)=>{
-            e.preventDefault();                 
-            if (mobileView) return
-            e.target.classList.remove('about_dot-active')
-        })
-    })
     
+    function aboutDotsFn(){
+        // Creating the Dots for each Card
+        const createDots = function(cards){
+            cards.forEach((_,i) => { 
+                const dotHtml = `<a class="about_dot" href="#about-card-${i}" data-dot="${i}">${i+1}</a>`
+                domEl.aboutDotContainer.insertAdjacentHTML('beforeend', dotHtml)
+            });
+        }
+        createDots(domEl.aboutCards)
+
+        let dots = document.querySelectorAll('.about_dot');
+
+        // Function for activating the current card Dot
+        function activateDot(idx){
+            dots.forEach((dot, i) => {dot.classList.remove('about_dot-active')})    // Remoing any active dots before setting the active dot
+            document.querySelector(`.about_dot[data-dot="${idx}"]`).classList.add('about_dot-active');
+        }
+
+        // Click Event for each dot
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click',(e)=>{
+                e.preventDefault();                 // Removing default behaviour
+                activateDot(i);
+            })
+        })
+
+        // Creating the Hover effect using js coz if not like this it causes problems in mobileview
+        dots.forEach((dot, i) => {
+            dot.addEventListener('mouseover',(e)=>{
+                e.preventDefault();                 
+                if (mobileView) return
+                e.target.classList.add('about_dot-active')
+            })
+        })
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener('mouseout',(e)=>{
+                e.preventDefault();                 
+                if (mobileView) return
+                e.target.classList.remove('about_dot-active')
+            })
+        })
+    }
+    
+
+    aboutDotsFn();
+
+
 
     // ============ Infinite Scrolling of cards ================
     
     function infiniteScroll(){
+    
         const wrap= document.querySelector('.about-wrap');
         const cardContainer= document.querySelector('.about-container');
         const actualCards = Array.from(document.querySelectorAll('.about-card'));
         const defaultInterval = 2000;
         let interval = defaultInterval;
+        let activePosition =(mobileView?(wrap.clientWidth/4.5):(wrap.clientWidth)/2);
         let index = 1;
         let activeCardIndex;
         let activeCard;
         let activeCardXPos;
         let allCardsXPosArr;
+        // DRAG VARIABLES
+        let initialPosition = null;
+        let dragMoving = false;
+        let transform = 0;
     
         // Widths of card and all cards together
         const totalCardsWidth = (actualCards[index].offsetWidth)*actualCards.length;
@@ -181,7 +193,6 @@ function aboutFn(domEl){
             return cloneCard
         })
     
-    
         //Getting all the x positions of all the cards including prev and next and declaring here bcz we will need it for positioning the active card x position
         allCardsXPosArr = getCards().map((card,i)=>card.getBoundingClientRect().x);				
     
@@ -190,13 +201,11 @@ function aboutFn(domEl){
     
         function movingCardContainer(xPos){
             // cardContainer.style.transform = `translateX(${-xPos+wrap.getBoundingClientRect().x}px)`;		// card to the start of wrap 
-            cardContainer.style.transform = `translateX(${-xPos+((wrap.clientWidth)/2)}px)`;					// card to the middle of wrap
+            cardContainer.style.transform = `translateX(${-xPos+(activePosition)}px)`;					// card to the middle of wrap
         }
     
         // Moving the container to the 1st element of the actual array
         movingCardContainer(activeCardXPos);	
-    
-    
     
         // Moving Left to Right
         const moveToNextCard = () => {
@@ -205,42 +214,76 @@ function aboutFn(domEl){
                 cardContainer.style.transition = 'none';
                 setActiveCard(getCards().indexOf(actualCards[0]));
                 movingCardContainer(activeCardXPos);
-                interval=0;
+                interval=50;
             } else {
                 activeCardIndex++;
                 setActiveCard(activeCardIndex);
-                cardContainer.style.transition = '.4s ease-out';
+                cardContainer.style.transition = '.7s ease-out';
                 movingCardContainer(activeCardXPos);
                 interval=defaultInterval;
             }
-            
         };
             
         // SRC: https://stackoverflow.com/questions/3583724/how-do-i-add-a-delay-in-a-javascript-loop
     
-        let idx = 1;                  						//  set your counter to 1
-    
         function startMovingCardsContainer() {         		//  create a loop function
-        setTimeout(function() {   						//  call a 3s setTimeout when the loop is called
-            moveToNextCard();   							//  your code here
-            if (idx > 0) {           						//  if the counter < 10, call the loop function
-            startMovingCardsContainer();             		//  ..  again which will trigger another 
-            }                       						//  ..  setTimeout()
-        }, interval)
+            setTimeout(function() {   						    //  call a interval setTimeout when the loop is called
+                if (!dragMoving) moveToNextCard();              //  your code here
+                startMovingCardsContainer();
+            }, interval)
         }
-    
         startMovingCardsContainer();                   		//  start the loop
+    
+
+
+        // Drag functionality
+        
+
+        const gestureStart = (e) => {
+            initialPosition = e.pageX;
+            dragMoving = true;
+            wrap.style.cursor ='grabbing';
+            const transformMatrix = window.getComputedStyle(cardContainer).getPropertyValue('transform');
+            if (transformMatrix !== 'none') {
+                transform = parseInt(transformMatrix.split(',')[4].trim());
+            }
+        }
+
+        const gestureMove = (e) => {
+            if (dragMoving) {
+                const currentPosition = e.pageX;
+                wrap.style.cursor ='grabbing';
+                const diff = currentPosition - initialPosition;
+                cardContainer.style.transform = `translateX(${transform + diff}px)`;  
+                cardContainer.style.transition = 'none';    // IMPORTANT BECAUSE IT MAKES THE MOVEMENT DURING GRABBING SMOOTH
+            }
+        };
+
+        const gestureEnd = (e) => {
+            dragMoving = false;
+            wrap.style.cursor ='grab';
+        }
+
+        if (window.PointerEvent) {
+            wrap.addEventListener('pointerdown', gestureStart);
+            wrap.addEventListener('pointermove', gestureMove);
+            wrap.addEventListener('pointerup', gestureEnd);  
+        } else {
+            wrap.addEventListener('touchdown', gestureStart);
+            wrap.addEventListener('touchmove', gestureMove);
+            wrap.addEventListener('touchup', gestureEnd);  
+            wrap.addEventListener('mousedown', gestureStart);
+            wrap.addEventListener('mousemove', gestureMove);
+            wrap.addEventListener('mouseup', gestureEnd);  
+        }
     
     }
     
+
     infiniteScroll();
 
     
-    // Only for mobile view the observer is going to be work
-    if (mobileView){
 
-    }
-        
 }
 
 
@@ -280,7 +323,20 @@ document.documentElement.style.setProperty('--vw', `${vw}px`);
 
 
 
-            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
@@ -336,7 +392,6 @@ document.documentElement.style.setProperty('--vw', `${vw}px`);
                 aboutContainerObserver.observe(card);
             })
 */
-
 
 
 
@@ -412,16 +467,6 @@ document.documentElement.style.setProperty('--vw', `${vw}px`);
     });
     
 */
-
-
-
-
-
-
-
-
-
-
 
 
 
