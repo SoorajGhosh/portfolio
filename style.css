@@ -715,13 +715,13 @@ button{
     }
 
     .about-container{
-        position: relative;
-        padding: 0;
         margin: auto;
         height: 450px;
+        /* position: relative;
+        padding: 0;
         touch-action: none;
         -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory;
+        scroll-snap-type: x mandatory; */
     }
 
     .about-card{
@@ -730,7 +730,7 @@ button{
         height: 80%;
         margin: auto 10px;
         border: 3px solid var(--primary-black);
-        pointer-events: none;
+        /* pointer-events: none; */             /* causes click event to not work on mobile devices */
         width: 240px;
         scroll-snap-align: center;
         scroll-behavior: smooth;

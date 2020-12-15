@@ -149,7 +149,7 @@ function aboutFn(domEl){
         const wrap= document.querySelector('.about-wrap');
         const cardContainer= document.querySelector('.about-container');
         const actualCards = Array.from(document.querySelectorAll('.about-card'));
-        const defaultInterval = 2000;
+        const defaultInterval = 3000;
         let interval = defaultInterval;
         let activePosition =(mobileView?(wrap.clientWidth/4.5):(wrap.clientWidth)/2);
         let index = 1;
@@ -161,19 +161,22 @@ function aboutFn(domEl){
         let initialPosition = null;
         let dragMoving = false;
         let transform = 0;
+        let cardClicked=false;
     
         // Widths of card and all cards together
         const totalCardsWidth = (actualCards[index].offsetWidth)*actualCards.length;
         const cardWidth = actualCards[index].clientWidth;
     
-        let getCards = () => Array.from(document.querySelectorAll('.about-card'));
-    
+        const getCards = () => Array.from(document.querySelectorAll('.about-card'));
+        const actualCardPositionIdx = (acIdx) => getCards().indexOf(actualCards[acIdx]);    // Getting position of actual cards in total array
+
         let setActiveCard = (activeCardIdx) =>  {
             activeCard = getCards()[activeCardIdx];
             getCards().forEach(card=>card.classList.remove('about-card-active'));
             activeCard?.classList.add('about-card-active');
             activeCardIndex = getCards().indexOf(activeCard);
             activeCardXPos = allCardsXPosArr[activeCardIdx]
+            cardContainer.style.transform = `translateX(${-activeCardXPos+(activePosition)}px)`;
         };
     
     
@@ -197,48 +200,51 @@ function aboutFn(domEl){
         allCardsXPosArr = getCards().map((card,i)=>card.getBoundingClientRect().x);				
     
         // Seting the First Active card as the 0th card of the actual cards
-        setActiveCard(getCards().indexOf(actualCards[0]));			
-    
-        function movingCardContainer(xPos){
-            // cardContainer.style.transform = `translateX(${-xPos+wrap.getBoundingClientRect().x}px)`;		// card to the start of wrap 
-            cardContainer.style.transform = `translateX(${-xPos+(activePosition)}px)`;					// card to the middle of wrap
-        }
-    
-        // Moving the container to the 1st element of the actual array
-        movingCardContainer(activeCardXPos);	
+        setActiveCard(actualCardPositionIdx(0));			
     
         // Moving Left to Right
-        const moveToNextCard = () => {
-            cards = getCards();
-            if (activeCardIndex >= (cards.length - actualCards.length)){
+        const moveToNextCard = () => {                                                  // FIRST CARD SWITCH PROBLEM IDEA: first switch then transition
+            const lastActualCard = actualCardPositionIdx(actualCards.length-1);
+            const firstActualCard = actualCardPositionIdx(0);
+            
+            if (activeCardIndex > lastActualCard){                                    // If card in next Cards
                 cardContainer.style.transition = 'none';
-                setActiveCard(getCards().indexOf(actualCards[0]));
-                movingCardContainer(activeCardXPos);
+                setActiveCard(activeCardIndex-actualCards.length);
                 interval=50;
+            
+            } else if (activeCardIndex < firstActualCard){                            // If card in previous cards
+                cardContainer.style.transition = 'none';
+                setActiveCard(activeCardIndex+actualCards.length);
+                interval=50;
+            
             } else {
+                cardContainer.style.transition = '.7s ease-out';
                 activeCardIndex++;
                 setActiveCard(activeCardIndex);
-                cardContainer.style.transition = '.7s ease-out';
-                movingCardContainer(activeCardXPos);
-                interval=defaultInterval;
+                if (cardClicked){
+                    cardClicked = false;
+                } else {
+                    interval=defaultInterval;
+                }
+                
             }
         };
             
         // SRC: https://stackoverflow.com/questions/3583724/how-do-i-add-a-delay-in-a-javascript-loop
     
-        function startMovingCardsContainer() {         		//  create a loop function
-            setTimeout(function() {   						    //  call a interval setTimeout when the loop is called
-                if (!dragMoving) moveToNextCard();              //  your code here
+        function startMovingCardsContainer() {         		                //  create a loop function
+            setTimeout(function() {   						                //  call a interval setTimeout when the loop is called
+                if (!dragMoving && !cardClicked) moveToNextCard();          //  your code here
                 startMovingCardsContainer();
             }, interval)
         }
-        startMovingCardsContainer();                   		//  start the loop
+        startMovingCardsContainer();                   		                //  start the loop
     
+
 
 
         // Drag functionality
         
-
         const gestureStart = (e) => {
             initialPosition = e.pageX;
             dragMoving = true;
@@ -263,7 +269,31 @@ function aboutFn(domEl){
             dragMoving = false;
             wrap.style.cursor ='grab';
         }
+        
+        const clickedFn = function (e){
+            const card = e.target.closest('.about-card')
+            const cardId = getCards().indexOf(card);
+            cardClicked = true;
+            cardContainer.style.transition = '.7s ease-out';
+            setActiveCard(parseInt(cardId));
+            cardClicked = false;
+        }
 
+        // Activating Card while moving
+        const draggingActiveCard = function (entries, observer){
+            const [entry]=entries;
+            if (dragMoving) {
+                // console.log(getCards().indexOf(entry.target))	
+                setActiveCard(getCards().indexOf(entry.target));
+            };
+        }
+
+        const wrapObserver = new IntersectionObserver(draggingActiveCard,{root:wrap, threshold: 1, rootMargin: `${activePosition}px` });
+
+        getCards().forEach(card=>{wrapObserver.observe(card)})
+
+
+        // Event Listeners for About slider
         if (window.PointerEvent) {
             wrap.addEventListener('pointerdown', gestureStart);
             wrap.addEventListener('pointermove', gestureMove);
@@ -276,7 +306,9 @@ function aboutFn(domEl){
             wrap.addEventListener('mousemove', gestureMove);
             wrap.addEventListener('mouseup', gestureEnd);  
         }
-    
+        cardContainer.addEventListener('click', clickedFn);     // click funcion must always work
+
+
     }
     
 
@@ -478,6 +510,13 @@ document.documentElement.style.setProperty('--vw', `${vw}px`);
             // }
             // addCard && domEl.aboutContainer.append(addCard)
 
+// if (cardId > lastActualCard){
+            //     selectCardId = cardId-actualCards.length;
+            // } else if ( cardId < firstActualCard){
+            //     selectCardId = cardId+actualCards.length;
+            // } else {
+            //     selectCardId = cardId;
+            // }
 
 
 
@@ -485,4 +524,11 @@ document.documentElement.style.setProperty('--vw', `${vw}px`);
 
 
 
-
+        // function movingCardContainer(xPos){
+        //     // cardContainer.style.transform = `translateX(${-xPos+wrap.getBoundingClientRect().x}px)`;		// card to the start of wrap 
+        //     cardContainer.style.transform = `translateX(${-xPos+(activePosition)}px)`;					// card to the middle of wrap
+        // }
+    
+        // // Moving the container to the 1st element of the actual array
+        // // movingCardContainer(activeCardXPos);	
+    
