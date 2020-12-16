@@ -372,14 +372,6 @@ button{
     transition: 1s;
 }
 
-.about-card:hover .about-card-content{
-    height: 87%;
-    transition: 2s;
-    background: var(--primary-blue-vertical-gradient);
-    background-size: 200% 200%;
-    animation: gradient-animation 4s ease-in-out 0s infinite alternate;
-}
-
 .about-card-active .about-card-content{
     height: 87%;
     transition: 2s;

@@ -143,25 +143,26 @@ function aboutFn(domEl){
 
 
     // ============ Infinite Scrolling of cards ================
-    
+    // SRC: https://www.youtube.com/watch?v=DqkH_PV5cto&list=LL&index=13
+
     function infiniteScroll(){
     
         const wrap= document.querySelector('.about-wrap');
         const cardContainer= document.querySelector('.about-container');
         const actualCards = Array.from(document.querySelectorAll('.about-card'));
-        const defaultInterval = 3000;
-        let interval = defaultInterval;
+        let defaultInterval = 3000;
         let activePosition =(mobileView?(wrap.clientWidth/4.5):(wrap.clientWidth)/2);
         let index = 1;
         let activeCardIndex;
-        let activeCard;
-        let activeCardXPos;
-        let allCardsXPosArr;
+        let activeCard;     
+        let allCardsXPosArr;    // Positions of all Cards on x axis
+        let activeCardXPos;     // Position of Active card in allCardsXPos
         // DRAG VARIABLES
         let initialPosition = null;
-        let dragMoving = false;
-        let transform = 0;
-        let cardClicked=false;
+        let grabbed = false;    // shows if container grabbed or not
+        let dragged = false;    // shows if container dragged or not 
+        let transform = 0;      // Needed for resuming movement of container when dragging is stopped temporarily
+        let timerFn;
     
         // Widths of card and all cards together
         const totalCardsWidth = (actualCards[index].offsetWidth)*actualCards.length;
@@ -203,51 +204,49 @@ function aboutFn(domEl){
         setActiveCard(actualCardPositionIdx(0));			
     
         // Moving Left to Right
-        const moveToNextCard = () => {                                                  // FIRST CARD SWITCH PROBLEM IDEA: first switch then transition
+        const moveToNextCard = () => {                                                // FIRST CARD SWITCH PROBLEM IDEA: first switch then transition
             const lastActualCard = actualCardPositionIdx(actualCards.length-1);
             const firstActualCard = actualCardPositionIdx(0);
             
             if (activeCardIndex > lastActualCard){                                    // If card in next Cards
                 cardContainer.style.transition = 'none';
                 setActiveCard(activeCardIndex-actualCards.length);
-                interval=50;
+                defaultInterval=50;
             
             } else if (activeCardIndex < firstActualCard){                            // If card in previous cards
                 cardContainer.style.transition = 'none';
                 setActiveCard(activeCardIndex+actualCards.length);
-                interval=50;
+                defaultInterval=50;
             
             } else {
                 cardContainer.style.transition = '.7s ease-out';
                 activeCardIndex++;
                 setActiveCard(activeCardIndex);
-                if (cardClicked){
-                    cardClicked = false;
-                } else {
-                    interval=defaultInterval;
-                }
+                defaultInterval=3000;
                 
             }
         };
-            
+          
+        
         // SRC: https://stackoverflow.com/questions/3583724/how-do-i-add-a-delay-in-a-javascript-loop
     
-        function startMovingCardsContainer() {         		                //  create a loop function
-            setTimeout(function() {   						                //  call a interval setTimeout when the loop is called
-                if (!dragMoving && !cardClicked) moveToNextCard();          //  your code here
-                startMovingCardsContainer();
+        function startMovingCardsContainer(interval) {         	//  create a loop function
+            timerFn = setTimeout(function() {   				//  call a interval setTimeout when the loop is called
+                moveToNextCard()                                //  your code here
+                startMovingCardsContainer(defaultInterval);                
             }, interval)
         }
-        startMovingCardsContainer();                   		                //  start the loop
+
+        startMovingCardsContainer(defaultInterval);             //  start the loop
     
 
-
-
+        
         // Drag functionality
+        // SRC: https://www.youtube.com/watch?v=YxMtL6lJbZw&list=LL&index=11&t=147s
         
         const gestureStart = (e) => {
             initialPosition = e.pageX;
-            dragMoving = true;
+            grabbed = true;
             wrap.style.cursor ='grabbing';
             const transformMatrix = window.getComputedStyle(cardContainer).getPropertyValue('transform');
             if (transformMatrix !== 'none') {
@@ -256,39 +255,55 @@ function aboutFn(domEl){
         }
 
         const gestureMove = (e) => {
-            if (dragMoving) {
+            if (grabbed) {
+                dragged = true;
                 const currentPosition = e.pageX;
                 wrap.style.cursor ='grabbing';
                 const diff = currentPosition - initialPosition;
                 cardContainer.style.transform = `translateX(${transform + diff}px)`;  
-                cardContainer.style.transition = 'none';    // IMPORTANT BECAUSE IT MAKES THE MOVEMENT DURING GRABBING SMOOTH
+                cardContainer.style.transition = 'none';                            // IMPORTANT BECAUSE IT MAKES THE MOVEMENT DURING GRABBING SMOOTH
+                clearTimeout(timerFn);                                              // stops timer function
+                startMovingCardsContainer(defaultInterval);                         // Restarting the timer
             }
         };
 
         const gestureEnd = (e) => {
-            dragMoving = false;
+            grabbed = false;
             wrap.style.cursor ='grab';
-        }
-        
-        const clickedFn = function (e){
             const card = e.target.closest('.about-card')
             const cardId = getCards().indexOf(card);
-            cardClicked = true;
-            cardContainer.style.transition = '.7s ease-out';
-            setActiveCard(parseInt(cardId));
-            cardClicked = false;
+            // Check if dragged if not then perform click action
+            if (dragged) {
+                dragged = false;
+            } else {
+                // Setting Clicking functionality here bcz otherwise it will click every time dragged and pointer / mouse button lifted
+                cardContainer.style.transition = '.7s ease-out';
+                setActiveCard(parseInt(cardId));
+                clearTimeout(timerFn);
+                startMovingCardsContainer(defaultInterval);                         // Restarting the timer after the gap
+            }
         }
+       
 
         // Activating Card while moving
         const draggingActiveCard = function (entries, observer){
             const [entry]=entries;
-            if (dragMoving) {
-                // console.log(getCards().indexOf(entry.target))	
+            if (grabbed && entry.isIntersecting) {	
                 setActiveCard(getCards().indexOf(entry.target));
             };
         }
 
-        const wrapObserver = new IntersectionObserver(draggingActiveCard,{root:wrap, threshold: 1, rootMargin: `${activePosition}px` });
+
+        const wrapObserverOptions = function (){
+            let marginDist = mobileView ? (cardWidth/4) : (cardWidth);
+            return {
+                root:wrap, 
+                threshold: 1, 
+                rootMargin: `0px -${marginDist}px 0px -${marginDist}px` 
+            }
+        }
+
+        const wrapObserver = new IntersectionObserver(draggingActiveCard, wrapObserverOptions());
 
         getCards().forEach(card=>{wrapObserver.observe(card)})
 
@@ -306,8 +321,7 @@ function aboutFn(domEl){
             wrap.addEventListener('mousemove', gestureMove);
             wrap.addEventListener('mouseup', gestureEnd);  
         }
-        cardContainer.addEventListener('click', clickedFn);     // click funcion must always work
-
+        
 
     }
     
@@ -366,169 +380,3 @@ document.documentElement.style.setProperty('--vw', `${vw}px`);
 
 
 
-
-
-
-
-
-/*
-
-
-            function createInfinte(activeCardIdx){
-            
-                let cards = document.querySelectorAll(".about-card");
-
-                // 1. Check the next card
-                let nextActive = cards[activeCardIdx+1];
-                // console.log('NextActive: ',nextActive);
-    
-                // 2. Check if the next card has a next or not 
-                let nextCard = cards[activeCardIdx+2];
-                // console.log('NextCard: ',nextCard);
-                
-                // 3. IF there no need to add new 
-                if (!nextCard){
-                    if (activeCardIdx+1 === cards.length-1){
-                        cloneCard = cards[0].cloneNode(true);
-                    } else {
-                        cloneCard = cards[activeCardIdx+1].cloneNode(true);
-                    }
-                    domEl.aboutContainer.insertAdjacentElement('beforeend',cloneCard);
-                    console.log(cards);
-                    // cards.push(cloneCard);
-                } 
-    
-                // 4. If not then add a new card 
-                // 5. Check if its the last card then add the first card from the list of cards.
-                // 6. If not then make sure that card to be added is the next card in the sequence
-
-            }
-    
-            function aboutCardIntersectionFn(entries){
-                const [entry] = entries;
-        
-                // Add or remove the active card class depedning on if its intersecting (entering) or not (exiting)
-                if (entry.isIntersecting===true){
-                    entry.target.classList.add("about-card-active");
-                    const idx = parseInt(entry.target.dataset.card);              // Getting the Id number fo slide
-                    createInfinte(idx);                                           // Infinite slide functionality goes here
-                    activateDot(idx);
-                } else {
-                    entry.target.classList.remove("about-card-active")      // removing the active card if intersecting goes false
-                }
-            }
-    
-            // About Card Observer
-            var aboutContainerObserver = new IntersectionObserver(aboutCardIntersectionFn, {root: domEl.aboutContainer, threshold:1, rootMargin:'0px'});
-            document.querySelectorAll('.about-card').forEach(function(card){
-                aboutContainerObserver.observe(card);
-            })
-*/
-
-
-
-/*
-    const interval = 3000;
-    const container = domEl.aboutContainer;
-    let cards = document.querySelectorAll('.about-card');
-    let index = 1;
-    let cardId;
-        
-    //Creating Clones to be added at the end and start of the container
-    const firstClone = cards[0].cloneNode(true);
-    const lastClone = cards[cards.length - 1].cloneNode(true);
-    
-    // Setting the ID of the clone cards in case we need to identify them later   
-    firstClone.id = 'first-clone';
-    lastClone.id = 'last-clone';
-    
-    // Addng the clones to the array of card in the container
-    container.append(firstClone);
-    container.prepend(lastClone);
-
-    // Card width which is going to be used for setting the moving the cotainer to the 2nd element of the array which is the actual first
-    const cardWidth = cards[index].clientWidth;
-
-    // Moving the contianer to show the first element first
-    container.style.transform = `translateX(${-cardWidth * index}px)`;
-        
-    // Getting the currents slides in the container
-    const getCards = () => document.querySelectorAll('.about-card');
-
-    // Moving Left to Right
-    const moveToNextCard = () => {
-        cards = getCards();
-        if (index >= cards.length - 1) return;
-        index++;
-        container.style.transition = '.7s ease-out';
-        container.style.transform = `translateX(${-cardWidth * index}px)`;
-    };
-    
-    // Moving Right to Left
-    const moveToPreviousCard = () => {
-        if (index <= 0) return;
-        index--;
-        container.style.transition = '.7s ease-out';
-        container.style.transform = `translateX(${-cardWidth * index}px)`;
-    };
-
-    //Automatic Moving slider function        
-    const startMovingCardsContainer = () => {
-        cardId = setInterval(() => {
-        moveToNextCard();
-        }, interval);
-    };
-
-    // Calling the function (later put it in a init function)
-    startMovingCardsContainer();
-  
-    // Adding the Rest of the slides transition after it reaches slide 1 clone  
-    container.addEventListener('transitionend', () => {
-        cards = getCards();
-        if (cards[index].id === firstClone.id) {
-            container.style.transition = 'none';
-            index = 1;
-            container.style.transform = `translateX(${-cardWidth * index}px)`;
-        }
-        
-        if (cards[index].id === firstClone.id) {
-            container.style.transition = 'none';
-            index = cards.length - 2;
-            container.style.transform = `translateX(${-cardWidth * index}px)`;
-        }
-    });
-    
-*/
-
-
-
-            // let addCard=undefined;
-            // const cards = domEl.aboutCards;
-            // console.log(activeCardIdx, cards.length-2)
-            // if (activeCardIdx===cards.length-2){
-            //     addCard = cards[0].cloneNode(true);
-            // }
-            // addCard && domEl.aboutContainer.append(addCard)
-
-// if (cardId > lastActualCard){
-            //     selectCardId = cardId-actualCards.length;
-            // } else if ( cardId < firstActualCard){
-            //     selectCardId = cardId+actualCards.length;
-            // } else {
-            //     selectCardId = cardId;
-            // }
-
-
-
-
-
-
-
-        // function movingCardContainer(xPos){
-        //     // cardContainer.style.transform = `translateX(${-xPos+wrap.getBoundingClientRect().x}px)`;		// card to the start of wrap 
-        //     cardContainer.style.transform = `translateX(${-xPos+(activePosition)}px)`;					// card to the middle of wrap
-        // }
-    
-        // // Moving the container to the 1st element of the actual array
-        // // movingCardContainer(activeCardXPos);	
-    
