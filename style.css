@@ -304,13 +304,12 @@ button{
     margin: 5px;
     transition: 300ms;
 }
-/* 
-.about_dot:hover{
-    transform: scale(1.2);
+
+.about_dot-hover{
     background: var(--primary-blue);
     color: var(--primary-white);
     border: 2px solid var(--primary-blue);
-} */
+}
 
 .about_dot-active{
     transform: scale(1.2);

@@ -91,57 +91,6 @@ function targetAnchorsFn(domEl){
 
 function aboutFn(domEl){
     
-    //============ Dots Functionality ====================
-    
-    function aboutDotsFn(){
-        // Creating the Dots for each Card
-        const createDots = function(cards){
-            cards.forEach((_,i) => { 
-                const dotHtml = `<a class="about_dot" href="#about-card-${i}" data-dot="${i}">${i+1}</a>`
-                domEl.aboutDotContainer.insertAdjacentHTML('beforeend', dotHtml)
-            });
-        }
-        createDots(domEl.aboutCards)
-
-        let dots = document.querySelectorAll('.about_dot');
-
-        // Function for activating the current card Dot
-        function activateDot(idx){
-            dots.forEach((dot, i) => {dot.classList.remove('about_dot-active')})    // Remoing any active dots before setting the active dot
-            document.querySelector(`.about_dot[data-dot="${idx}"]`).classList.add('about_dot-active');
-        }
-
-        // Click Event for each dot
-        dots.forEach((dot, i) => {
-            dot.addEventListener('click',(e)=>{
-                e.preventDefault();                 // Removing default behaviour
-                activateDot(i);
-            })
-        })
-
-        // Creating the Hover effect using js coz if not like this it causes problems in mobileview
-        dots.forEach((dot, i) => {
-            dot.addEventListener('mouseover',(e)=>{
-                e.preventDefault();                 
-                if (mobileView) return
-                e.target.classList.add('about_dot-active')
-            })
-        })
-
-        dots.forEach((dot, i) => {
-            dot.addEventListener('mouseout',(e)=>{
-                e.preventDefault();                 
-                if (mobileView) return
-                e.target.classList.remove('about_dot-active')
-            })
-        })
-    }
-    
-
-    aboutDotsFn();
-
-
-
     // ============ Infinite Scrolling of cards ================
     // SRC: https://www.youtube.com/watch?v=DqkH_PV5cto&list=LL&index=13
 
@@ -171,6 +120,33 @@ function aboutFn(domEl){
         const getCards = () => Array.from(document.querySelectorAll('.about-card'));
         const actualCardPositionIdx = (acIdx) => getCards().indexOf(actualCards[acIdx]);    // Getting position of actual cards in total array
 
+
+
+        // ====================== ABOUT DOTS ==========================
+
+        // This section must be here in the code before setActiveCard so as not to cause uncaught error
+
+        // Creating the Dots for each Card
+        const createDots = function(cards){
+            cards.forEach((_,i) => { 
+                const dotHtml = `<a class="about_dot" href="#about-card-${i}" data-dot="${i}">${i+1}</a>`
+                domEl.aboutDotContainer.insertAdjacentHTML('beforeend', dotHtml)
+            });
+        }
+        createDots(actualCards)
+
+        let dots = document.querySelectorAll('.about_dot');
+
+        // Function for activating the current card Dot
+        function activateDot(idx){
+            dots.forEach((dot, i) => {dot.classList.remove('about_dot-active')})    // Remoing any active dots before setting the active dot
+            document.querySelector(`.about_dot[data-dot="${idx}"]`).classList.add('about_dot-active');
+        }
+        
+
+
+        // ======================= ABOUT CARDS =================================
+
         let setActiveCard = (activeCardIdx) =>  {
             activeCard = getCards()[activeCardIdx];
             getCards().forEach(card=>card.classList.remove('about-card-active'));
@@ -178,6 +154,8 @@ function aboutFn(domEl){
             activeCardIndex = getCards().indexOf(activeCard);
             activeCardXPos = allCardsXPosArr[activeCardIdx]
             cardContainer.style.transform = `translateX(${-activeCardXPos+(activePosition)}px)`;
+            activateDot(activeCard.dataset.card)
+            // console.log(activeCard.dataset.card);
         };
     
     
@@ -275,6 +253,7 @@ function aboutFn(domEl){
             // Check if dragged if not then perform click action
             if (dragged) {
                 dragged = false;
+                setActiveCard(activeCardIndex);     // To position the Active card correctly in the place of active cards after leaving the grab hold.
             } else {
                 // Setting Clicking functionality here bcz otherwise it will click every time dragged and pointer / mouse button lifted
                 cardContainer.style.transition = '.7s ease-out';
@@ -298,7 +277,7 @@ function aboutFn(domEl){
             let marginDist = mobileView ? (cardWidth/4) : (cardWidth);
             return {
                 root:wrap, 
-                threshold: 1, 
+                threshold: 0.7, 
                 rootMargin: `0px -${marginDist}px 0px -${marginDist}px` 
             }
         }
@@ -308,7 +287,7 @@ function aboutFn(domEl){
         getCards().forEach(card=>{wrapObserver.observe(card)})
 
 
-        // Event Listeners for About slider
+        // =================== ABOUT CARDS/SLIDER EVENT LISTENERS =====================
         if (window.PointerEvent) {
             wrap.addEventListener('pointerdown', gestureStart);
             wrap.addEventListener('pointermove', gestureMove);
@@ -321,6 +300,37 @@ function aboutFn(domEl){
             wrap.addEventListener('mousemove', gestureMove);
             wrap.addEventListener('mouseup', gestureEnd);  
         }
+
+
+        // =================== ABOUT DOTS EVENT LISTENERS =====================
+        
+        // Click Event for each dot
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click',(e)=>{
+                e.preventDefault();                 // Removing default behaviour
+                activateDot(i);
+                setActiveCard(i+5);
+                clearTimeout(timerFn);
+                startMovingCardsContainer(defaultInterval);
+            })
+        })
+
+        // Creating the Hover effect using js coz if not like this it causes problems in mobileview
+        dots.forEach((dot, i) => {
+            dot.addEventListener('mouseover',(e)=>{
+                e.preventDefault();                 
+                if (mobileView) return
+                e.target.classList.add('about_dot-hover')
+            })
+        })
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener('mouseout',(e)=>{
+                e.preventDefault();                 
+                if (mobileView) return
+                e.target.classList.remove('about_dot-hover')
+            })
+        })
         
 
     }
