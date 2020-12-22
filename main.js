@@ -345,6 +345,13 @@ function aboutFn(domEl){
 
 
 
+// ================================= Project Section =======================================
+
+function projectFn(domEl){
+    
+}
+
+
 
 // ===============Controller (Combines all page component functions) ======================
 let controller = (function(){
@@ -356,6 +363,8 @@ let controller = (function(){
     targetAnchorsFn(dom);
 
     aboutFn(dom);
+
+    projectFn(dom);
     
 })();
 

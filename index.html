@@ -16,7 +16,7 @@
         
         <div class="nav">
             <div class="nav-item home-btn">
-                <a class="nav-target" href="#intro-section"><img src="assets/home.png" alt="Home"></a>
+                <a class="nav-target" href="#intro-section"><img src="assets/icons/home.png" alt="Home"></a>
             </div>   
             <ul class="nav-ul">
                 <li class="nav-item nav-links"><a class="nav-target" href="#about-section">About</a></li>
@@ -76,22 +76,57 @@
             
             <div class="section project" id="project-section">
                 
-                <div class="project-title">My Project</div>
+                <div class="project-title">
+                    <div class="project-name project-name-active" id="project-name-0" data-project-name="0">Project 1</div>
+                    <div class="project-name" id="project-name-1" data-project-name="1">Project 2</div>
+                    <div class="project-name" id="project-name-2" data-project-name="2">Project 3</div>
+                </div>
                 
                 <div class="project-area">
                     
                     <div class="project-details">
-                        <button class="project-details-btn" id='project-img'>Image</button>
                         <button class="project-details-btn" id='project-sum'>Summary</button>
+                        <button class="project-details-btn project-details-btn-active" id='project-img'>Image</button>
                         <button class="project-details-btn" id='project-tech'>Technical</button>
                     </div>
                     
-                    <div class="project-content project-arrow" id="project-arrow-left"><img src="assets/left-arrow.png" alt="Left"></div>
+                    <div class="project-arrow" id="project-arrow-left"><img src="assets/icons/left-arrow.png" alt="Left"></div>
                     
-                    <div class="project-content project-arrow" id="project-arrow-right"><img src="assets/right-arrow.png" alt="Right"></div>
+                    <div class="project-arrow" id="project-arrow-right"><img src="assets/icons/right-arrow.png" alt="Right"></div>
                     
-                    <div class="project-content project-frame">
-                        <div class="project-image"></div>
+
+                    <div class="project-frame">
+                        
+                        <div class="project-display project-display-active" id="project-0" data-project="0">
+                            <div class="project-content  project-summary">
+                                0 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde ipsam, vel eligendi nobis fugiat ab possimus, ducimus aperiam voluptate repellat aliquam quae nesciunt omnis tempora explicabo impedit eos quos quo. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos ipsum dolor nam tempora provident ea voluptatibus porro iusto quo harum. Ab blanditiis vero earum ullam reprehenderit praesentium sit quisquam hic? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita voluptatum, sunt in obcaecati vitae aperiam debitis consequatur a libero adipisci quas, temporibus id amet sequi doloribus veritatis neque. Nostrum, minus?
+                            </div>
+                            <div class="project-content project-image project-content-active">
+                                <img src="assets/project-images/0.png" alt="Project 1">
+                            </div>
+                            <div class="project-content project-technical"></div>
+                        </div>
+
+                        <div class="project-display" id="project-1" data-project="1">
+                            <div class="project-content project-summary">
+                                1 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde ipsam, vel eligendi nobis fugiat ab possimus, ducimus aperiam voluptate repellat aliquam quae nesciunt omnis tempora explicabo impedit eos quos quo. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos ipsum dolor nam tempora provident ea voluptatibus porro iusto quo harum. Ab blanditiis vero earum ullam reprehenderit praesentium sit quisquam hic? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita voluptatum, sunt in obcaecati vitae aperiam debitis consequatur a libero adipisci quas, temporibus id amet sequi doloribus veritatis neque. Nostrum, minus?
+                            </div>
+                            <div class="project-content project-image project-content-active">
+                                <img src="assets/project-images/1.png" alt="Project 1">
+                            </div>
+                            <div class="project-content project-technical"></div>
+                        </div>
+
+                        <div class="project-display" id="project-2" data-project="2">
+                            <div class="project-content project-summary">
+                                2 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde ipsam, vel eligendi nobis fugiat ab possimus, ducimus aperiam voluptate repellat aliquam quae nesciunt omnis tempora explicabo impedit eos quos quo. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos ipsum dolor nam tempora provident ea voluptatibus porro iusto quo harum. Ab blanditiis vero earum ullam reprehenderit praesentium sit quisquam hic? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita voluptatum, sunt in obcaecati vitae aperiam debitis consequatur a libero adipisci quas, temporibus id amet sequi doloribus veritatis neque. Nostrum, minus?
+                            </div>
+                            <div class="project-content project-image project-content-active">
+                                <img src="assets/project-images/2.png" alt="Project 2">
+                            </div>
+                            <div class="project-content project-technical"></div>
+                        </div>
+                        
                     </div> 
                     
                     <button class="project-btn" id="live-demo-btn">Live Demo</button>
@@ -108,31 +143,31 @@
                 <ul class="socials">
                     <li>
                         <a href="#" class="social-link">
-                            <img class="social-img" src="assets/fb.png" alt="FaceBook">
+                            <img class="social-img" src="assets/icons/fb.png" alt="FaceBook">
                             <span class="social-text">Facebook</span>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="social-link">
-                            <img class="social-img" src="assets/ig.png" alt="Instagram">
+                            <img class="social-img" src="assets/icons/ig.png" alt="Instagram">
                             <span class="social-text">Instagram</span>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="social-link">
-                            <img class="social-img" src="assets/ln.png" alt="LinkedIn">
+                            <img class="social-img" src="assets/icons/ln.png" alt="LinkedIn">
                             <span class="social-text">LinkedIn</span>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="social-link">
-                            <img class="social-img" src="assets/gm.png" alt="Gmail">
+                            <img class="social-img" src="assets/icons/gm.png" alt="Gmail">
                             <span class="social-text">Gmail</span>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="social-link">
-                            <img class="social-img" src="assets/gh.png" alt="Github">
+                            <img class="social-img" src="assets/icons/gh.png" alt="Github">
                             <span class="social-text">GitHub</span>
                         </a>
                     </li>
