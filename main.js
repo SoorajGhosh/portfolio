@@ -26,12 +26,32 @@ let uiElements = (function(){
         navLinks : Array.from(document.querySelectorAll('.nav-links')),
         navUl : document.querySelector('.nav-ul'),
         targetBtns : document.querySelectorAll('.target-btn'),
+
+        // =============== ABOUT ===================
         aboutSection: document.querySelector('.about'),
         aboutDotContainer: document.querySelector('.about_dots_container'),
         abutDots:  Array.from(document.querySelectorAll('.about_dot')),
         aboutWrap: document.querySelector('.about-wrap'),
         aboutContainer: document.querySelector('.about-container'),
         aboutCards: Array.from(document.querySelectorAll('.about-card')),
+
+        // =============== PROJECT ===================
+        projectSection: document.querySelector('.project'),
+        projectTitle: document.querySelector('.project-title'),
+        projectNames: document.querySelectorAll('.project-name'),
+        projectArea: document.querySelector('.project-area'),
+        projectDetails: document.querySelector('.project-details'),
+        projectDetailsBtns: document.querySelectorAll('.project-details-btn'),
+        projectArrows: document.querySelectorAll('.project-arrow'),
+        projectFrame: document.querySelector('.project-frame'),
+        projectSlider: document.querySelector('.project-slider'),
+        projectSlides: document.querySelectorAll('.project-slide'),
+        projectContents: document.querySelectorAll('.project-content'),
+        projectSummaries: document.querySelectorAll('.project-summary'),
+        projectImages: document.querySelector('.project-image'),
+        projectTechnicals: document.querySelectorAll('.project-technical'),
+        projectBtns: document.querySelectorAll('.project-btn'),
+        projectSubtext: document.querySelector('.project-subtext')
     }
 
     return {dom,}
@@ -349,6 +369,59 @@ function aboutFn(domEl){
 
 function projectFn(domEl){
     
+    let activeProjectSlide=0;
+    let slideExtraWidth = 14;   // the padding margin and borders included in the slide width
+    let activeProjectSlidePos=(activeSlideIdx)=>activeSlideIdx*(domEl.projectSlides[activeSlideIdx].offsetWidth + slideExtraWidth); 
+
+
+    // CHange the project view by using the details button
+    const projectDetailsChangeFn = function(element){
+        
+        // Activating the project details button
+        domEl.projectDetailsBtns.forEach((cur)=>cur.classList.remove('project-details-btn-active'));
+        element.classList.add('project-details-btn-active');
+        
+        // Activating the correct Project Content in Project Display
+        domEl.projectContents.forEach((cur)=>cur.classList.remove('project-content-active'));
+        if (element.id==='project-sum') document.querySelectorAll('.project-summary').forEach((cur)=>cur.classList.add('project-content-active'));
+        else if (element.id==='project-img') document.querySelectorAll('.project-image').forEach((cur)=>cur.classList.add('project-content-active'));
+        else if (element.id==='project-tech') document.querySelectorAll('.project-technical').forEach((cur)=>cur.classList.add('project-content-active'));
+
+    }
+
+    // Moving Project Slides
+    const proejctMovementFn = function(element){
+        
+        if (element.id === 'project-arrow-left') {
+            if (activeProjectSlide>0)activeProjectSlide--; 
+            else activeProjectSlide=domEl.projectSlides.length-1;
+        } else if (element.id === 'project-arrow-right') {
+            if (activeProjectSlide<domEl.projectSlides.length-1) activeProjectSlide++; 
+            else activeProjectSlide=0;
+        }
+
+        //changing project names
+        domEl.projectNames.forEach((cur)=>cur.classList.remove('project-name-active'));
+        domEl.projectNames[activeProjectSlide].classList.add('project-name-active');
+        
+        // Moving the slider
+        domEl.projectSlider.style.transform = `translateX(-${activeProjectSlidePos(activeProjectSlide)}px)`
+    
+    }
+
+    
+    const projectAreaFn = (e) => {
+        // Passing target elements bcz closest is already decided otherwise other elements could interrupt capturing the right elements
+        if (e.target.closest('.project-arrow')){                                // ARROW CLICKED
+            proejctMovementFn(e.target.closest('.project-arrow'));   
+        } else if (e.target.closest('.project-details-btn')){                   // PROJECT DETAILS BTN CLICKED
+            projectDetailsChangeFn(e.target.closest('.project-details-btn'));
+        } else if (e.target.closest('.project-btn')){                           // PROJECT BTN CLICKED
+            console.log('A Project btn clicked');
+        }
+    }
+
+    domEl.projectArea.addEventListener('click', projectAreaFn)
 }
 
 
