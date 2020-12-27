@@ -763,6 +763,9 @@ button{
     }
 
     /* ===============ABOUT RESPONSIVE=============================== */
+    .about_dots_container{
+        margin-top: 20px;
+    }
 
     .about_dot{
         margin: 3px;
@@ -778,7 +781,7 @@ button{
 
     .about-container{
         margin: auto;
-        height: 450px;
+        height: fit-content;
         /* position: relative;
         padding: 0;
         touch-action: none;
@@ -788,8 +791,8 @@ button{
 
     .about-card{
         border-radius: 15px;
-        top: 0;
-        height: 80%;
+        /* top: 0; */
+        height: 360px;
         margin: auto 10px;
         border: 3px solid var(--primary-black);
         /* pointer-events: none; */             /* causes click event to not work on mobile devices */
