@@ -677,6 +677,7 @@ button{
 
 
 .project-btn{
+    position: relative;
     background: var(--primary-background);
     border: 3px;
     font-size: 1rem;
@@ -688,13 +689,41 @@ button{
     margin: 5px 10px;
     transition: 300ms;
     cursor: pointer;
+    border: 3px solid var(--primary-background);
+    overflow: hidden;
 }
 
 .project-btn:hover{
-    font-size: 1.1rem;
     background: var(--primary-white);
-    color: var(--primary-black);
     border: 3px solid var(--primary-black);
+}
+
+.project-demo-url,.project-code-url{
+    position: absolute;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--primary-white);
+    transition: 300ms;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 100%;
+    display: none;
+}
+
+
+.project-demo-url-active,.project-code-url-active{
+    display: block;
+}
+
+.project-btn:hover .project-demo-url{
+    font-size: 1.1rem;
+    color: var(--primary-black);
+}
+
+.project-btn:hover .project-code-url{
+    font-size: 1.1rem;
+    color: var(--primary-black);
 }
 
 .project-subtext{

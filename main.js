@@ -51,6 +51,8 @@ let uiElements = (function(){
         projectImages: document.querySelector('.project-image'),
         projectLearnings: document.querySelectorAll('.project-learning'),
         projectBtns: document.querySelectorAll('.project-btn'),
+        projectDemoUrls: document.querySelectorAll('.project-demo-url'),
+        projectCodeUrls: document.querySelectorAll('.project-code-url'),
         projectSubtext: document.querySelector('.project-subtext')
     }
 
@@ -157,8 +159,7 @@ function sliderObj({wrapper, cardContainer, actualCards, slideMoveWidth,transfor
     this.mobileView = mobileView;
     this.observerMarginDist = observerMarginDist;
     this.cardSetActiveThreshold = cardSetActiveThreshold,
-    this.simultaneousChangingElementsArr = simultaneousChangingElementsArr;
-    this.simClassName= this.simultaneousChangingElementsArr && this.simultaneousChangingElementsArr[0][0].className;   // getting simultanous class name 
+    this.simultaneousChangingElementsArr = simultaneousChangingElementsArr; 
 
     // Computed Variables or later declared Variables
     // All Varibales stay here bcz they are used in all the methods and may need to be called before init so they may not even be hoisted
@@ -168,6 +169,8 @@ function sliderObj({wrapper, cardContainer, actualCards, slideMoveWidth,transfor
     this.activeCardXPos;                                // Position of Active card in allCardsXPos
     this.cardClass = this.actualCards[0].className;
     this.dots;
+    this.simClassNameArr = this.simultaneousChangingElementsArr?.map((cur,i)=>cur[0].className);    // array of simultanous class names
+    
     // DRAG VARIABLES
     this.initialPosition = null;
     this.grabbed = false;                               // shows if container grabbed or not
@@ -208,9 +211,9 @@ sliderObj.prototype.setActiveCard = function(activeCardIdx){
 
 // Changing simultaneous elements function 
 sliderObj.prototype.changeSimultaneous = function (){
-    this.simultaneousChangingElementsArr.forEach((elementArr) => {
-        elementArr.forEach((cur)=>cur.classList.remove(this.simClassName+'-active'));    // removing the active class from any element previously active
-        elementArr[this.activeActualCardIdx].classList.add(this.simClassName+'-active'); // activating the correct element based on active index
+    this.simultaneousChangingElementsArr.forEach((elementArr,arrIdx) => {
+        elementArr.forEach((cur)=>cur.classList.remove(this.simClassNameArr[arrIdx]+'-active'));    // removing the active class from any element previously active
+        elementArr[this.activeActualCardIdx].classList.add(this.simClassNameArr[arrIdx]+'-active'); // activating the correct element based on active index
     })
 }
 
@@ -502,21 +505,21 @@ function projectFn(domEl){
         mobileView: mobileView,
         observerMarginDist: 0,
         cardSetActiveThreshold: 0.4,
-        simultaneousChangingElementsArr: [domEl.projectNames,]
+        simultaneousChangingElementsArr: [domEl.projectNames, domEl.projectDemoUrls, domEl.projectCodeUrls]
     })
 
     projectSliderObj.init()
     
     // Setting id and dataset values to the project titles programamtically
-    const projectNameChanges = (function(){
+    const projectNamesUpdateIdData = (function(){
         const projectNames = document.querySelectorAll(".project-name");
         projectNames.forEach((cur,i)=>{
             cur.id = "project-name-"+i;
             cur.setAttribute('data-project-name',i);
         });
-    })()
+    })();
     
-    // CHange the project view by using the details button
+    // Change the project view by using the details button
     const projectDetailsChangeFn = function(element){  
         // Activating the project details button
         domEl.projectDetailsBtns.forEach((cur)=>cur.classList.remove('project-details-btn-active'));
@@ -537,6 +540,18 @@ function projectFn(domEl){
         }
     }
 
+    // Getting to the project btn links
+    const projectBtnFn = function(element){
+        let activeUrl;
+        if (element.id=='live-demo-btn'){
+            activeUrl = document.querySelector('.project-demo-url-active').dataset['demoUrl']
+        } else if (element.id=='view-code-btn'){
+            activeUrl= document.querySelector('.project-code-url-active').dataset['codeUrl'];
+        }
+        window.open(activeUrl); 
+    }
+
+    // Functions that decides what is clicked and what to do for each specific click on a clickable section in the project area
     const projectAreaFn = (e) => {
         // Passing target elements bcz closest is already decided otherwise other elements could interrupt capturing the right elements
         if (e.target.closest('.project-arrow')){                                // ARROW CLICKED
@@ -544,7 +559,7 @@ function projectFn(domEl){
         } else if (e.target.closest('.project-details-btn')){                   // PROJECT DETAILS BTN CLICKED
             projectDetailsChangeFn(e.target.closest('.project-details-btn'));
         } else if (e.target.closest('.project-btn')){                           // PROJECT BTN CLICKED
-            console.log('A Project btn clicked');
+            projectBtnFn(e.target.closest('.project-btn'));
         }
     }
 
