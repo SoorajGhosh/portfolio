@@ -289,33 +289,35 @@ button{
   scrollbar-width: none;  /* Firefox */
 }
 
+.about_dots_container{
+    position: relative;
+    margin-bottom: 10px;
+} 
+
 .about_dot{
     position: relative;
     display: inline-block;
-    width: 1.5rem;
-    height: 1.5rem;
-    background: var(--primary-white);
-    color: var(--primary-black);
-    border: 2px solid var(--primary-black);
+    width: 7px;
+    height: 7px;
+    background: var(--primary-grey);
+    opacity: 0.8;
     text-decoration: none;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
+    border-radius: 10px;
     margin: 5px;
     transition: 300ms;
 }
 
+.about_dot-text{
+    display: none;
+}
+
 .about_dot-hover{
     background: var(--primary-blue);
-    color: var(--primary-white);
-    border: 2px solid var(--primary-blue);
 }
 
 .about_dot-active{
-    transform: scale(1.2);
     background: var(--primary-blue);
-    color: var(--primary-white);
-    border: 2px solid var(--primary-blue);
+    width: 21px;
 }
 
 .about-wrap{
@@ -325,7 +327,6 @@ button{
     margin: auto;
     overflow-x: hidden;
     cursor: grab;
-    /* border: 1px solid red; */
 }
 
 .about-container{
@@ -334,11 +335,11 @@ button{
     width: fit-content;
     margin: auto;
     display: block;
+    font-size: 0;   /*to remove the white space*/
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
     touch-action: none;
-    /* border: 1px solid black; */
 }
 
 .about-card{
@@ -349,14 +350,16 @@ button{
     height: 410px;
     transition: 300ms;
     border-radius: 20px;
+    font-size: 1rem;
     border: 5px solid var(--primary-black);
     scroll-snap-align: center;
     scroll-behavior: smooth;
     scroll-snap-stop: always;
+    box-sizing: border-box;
 }
 
 .about-card-title{
-    font-size: 2.5em;
+    font-size: 2.5rem;
     font-weight: bold; 
 }
 
@@ -378,6 +381,8 @@ button{
     background-size: 200% 200%;
     animation: gradient-animation 4s ease-in-out 0s infinite alternate;
 }
+
+
 
 
 /* ================================PROJECT=============================== */
@@ -414,7 +419,7 @@ button{
     position: relative;
     margin: auto;
     width: 100%;
-    height: 550px;
+    height: fit-content;
 }
 
 .project-details{
@@ -451,11 +456,13 @@ button{
 
 .project-arrow{
     display: inline-block;
-    position: relative;
-    top: 40%;
+    position: absolute;
+    top: 45%;
     margin: 0 20px;
     padding: auto;
     cursor: pointer;
+    transform: translateY(-50%);
+    z-index: 1;
 }
 
 .project-arrow img{
@@ -469,13 +476,14 @@ button{
 }
 
 #project-arrow-left{
-    float: left;
+    left: 0;
 }
 
 #project-arrow-right{
-    float: right;
+    right: 0;
 }
 
+/* 
 .project-frame{
     display: inline-block;
     position: relative;
@@ -507,16 +515,119 @@ button{
     margin-right: 10px;
     border-radius: 15px;
     overflow: hidden;
+} */
+
+
+.project-frame{
+    display: inline-block;
+    position: relative;
+    height: 480px;
+    width: 82%;
+    border: 5px solid var(--primary-black);
+    margin: 20px auto 10px auto;
+    padding: 10px;
+    border-radius: 20px;
+    overflow: hidden;
+    touch-action: none;
 }
 
+.project-slider{
+    position: relative;
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    margin-top: 2%;
+    white-space: nowrap;
+    font-size: 0;           /*removes white space between inline block children*/
+    transition: 700ms ease;
+}
+
+.project-slide{
+    position: relative;
+    display: inline-block;
+    visibility: hidden;
+    width: 100%;
+    height: 96.5%;
+    margin: 0 10px;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+
+/*
+-- for oop project slider
+.project-frame{
+    position: relative;
+    height: 100%;
+    width: 90%;
+    margin: auto;
+    overflow-x: hidden;
+    cursor: grab; -- ends here 
+    display: inline-block;
+    position: relative;
+    height: 85%;
+    width: 82%;
+    border: 5px solid var(--primary-black);
+    margin: 20px auto 10px auto;
+    padding: 10px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.project-slider{
+    position: relative;
+    height: 100%;
+    width: fit-content;
+    margin: auto;
+    display: block;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    touch-action: none; --ends here
+    position: relative;
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    margin-top: 2%;
+    white-space: nowrap;
+    transition: 700ms ease;
+}
+
+.project-slide{
+    position: relative;
+    display: inline-block;
+    margin: 0px 1%;
+    width: 99%;
+    height: 96.5%;
+    opacity: 1;
+    transition: 300ms;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 5px solid transparent;  -- add this for super ceneter
+    scroll-snap-align: center;
+    scroll-behavior: smooth;
+    scroll-snap-stop: always; -- end here
+    position: relative;
+    display: inline-block;
+    visibility: hidden;
+    width: 99%;
+    height: 96%;
+    margin: 0 0.5%;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+*/
+
 .project-slide-active{
-    visibility: visible;
+    opacity: 1;
 }
 
 
 .project-content{
     position: absolute;
     visibility: hidden;
+    font-size: 0.8rem;
     height: 100%;
     width: 100%;
     white-space: normal;
@@ -529,6 +640,39 @@ button{
 
 .project-content-active{
     visibility: visible;
+}
+
+.project_dots_container{
+    margin: 2px 0px 5px 0px;
+}
+
+.project_dot{
+    position: relative;
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: var(--primary-white);
+    color: var(--primary-black);
+    border: 2px solid var(--primary-black);
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 5px;
+    transition: 300ms;   
+}
+
+.project_dot-hover{
+    background: var(--primary-blue);
+    color: var(--primary-white);
+    border: 2px solid var(--primary-blue);
+}
+
+.project_dot-active{
+    transform: scale(1.2);
+    background: var(--primary-blue);
+    color: var(--primary-white);
+    border: 2px solid var(--primary-blue);
 }
 
 
@@ -554,6 +698,7 @@ button{
 }
 
 .project-subtext{
+    position: relative;
     width: 82%;
     margin: 5px auto;
     font-size: 0.8rem;
@@ -767,10 +912,6 @@ button{
         margin-top: 20px;
     }
 
-    .about_dot{
-        margin: 3px;
-    }
-
     .about-wrap{
         position: relative;
         width: 102%;
@@ -863,13 +1004,13 @@ button{
     }
 
     .project-arrow{
-        margin: 0 1.5%;
-        top: 110px;
+        margin: 0%;
+        top: 40%;
     }
 
     .project-arrow img{
-        height: 20px;
-        width: 20px;
+        height: 30px;
+        width: 30px;
     }
 
     .project-frame{
@@ -877,21 +1018,31 @@ button{
         width: 80%;
         border: 4px solid var(--primary-black);
         margin: 40px auto 10px auto;
-        padding: 4px;
+        padding: 0;
         border-radius: 10px;
     }
 
     .project-slider{
         margin-top: 0;
     }
-
+    
     .project-slide{
         height: 100%;
         border-radius: 5px;
+        margin: 0;
     }
+
 
     .project-content{
         font-size: 0.8rem;
+    }
+    
+    .project_dots_container{
+        margin: 2px 0px 10px 0px;
+    }
+
+    .project_dot{
+        margin: 3px;
     }
 
     .project-btn{
