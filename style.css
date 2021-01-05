@@ -195,11 +195,43 @@ button{
     display: inline-block;
     position: relative;
     width: 90%;
-    height: 80vh;
+    height: fit-content;
     padding: 50px 10px;
-    /* border: 1px solid black; */
+    margin: 10px auto;
 }
 
+.section-head{
+    position: relative;
+    width: 60%;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.section-heading{
+    position: relative;
+    font-size: 3.5rem;
+    font-weight: bold;
+    display: block;
+    padding: 7px;
+    border: 6px solid var(--primary-black);
+}
+
+.section-sub-heading{
+    position: relative;
+    float: right;
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding: 2px 5px;
+    border: 6px solid var(--primary-black);
+    border-top: 0px;
+}
+
+.section-text{
+    font-size: 0.9rem;
+    width: 85%;
+    margin: 20px auto 40px auto;
+    text-align: justify;
+}
 
 
 /* =========================INTRO========================== */
@@ -217,6 +249,7 @@ button{
 }
 
 .intro-text{
+    width: 85%;
     font-size: 0.9rem;
     margin: 50px auto;
     text-align: justify;
@@ -393,11 +426,11 @@ button{
 
 .project-title{
     position: relative;
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     font-weight: bold;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     text-align: center;
-    height: 80px;
+    height: 60px;
 }
 
 .project-name{
@@ -451,6 +484,8 @@ button{
 }
 
 .project-details-btn-active{
+    background-color: var(--primary-black);
+    color: var(--primary-white);
     transform: scale(1.2);
 }
 
@@ -482,41 +517,6 @@ button{
 #project-arrow-right{
     right: 0;
 }
-
-/* 
-.project-frame{
-    display: inline-block;
-    position: relative;
-    height: 85%;
-    width: 82%;
-    border: 5px solid var(--primary-black);
-    margin: 20px auto 10px auto;
-    padding: 10px;
-    border-radius: 20px;
-    overflow: hidden;
-}
-
-.project-slider{
-    position: relative;
-    display: inline-block;
-    height: 100%;
-    width: 100%;
-    margin-top: 2%;
-    white-space: nowrap;
-    transition: 700ms ease;
-}
-
-.project-slide{
-    position: relative;
-    display: inline-block;
-    visibility: hidden;
-    width: 100%;
-    height: 96.5%;
-    margin-right: 10px;
-    border-radius: 15px;
-    overflow: hidden;
-} */
-
 
 .project-frame{
     display: inline-block;
@@ -553,76 +553,9 @@ button{
     overflow: hidden;
 }
 
-
-/*
--- for oop project slider
-.project-frame{
-    position: relative;
-    height: 100%;
-    width: 90%;
-    margin: auto;
-    overflow-x: hidden;
-    cursor: grab; -- ends here 
-    display: inline-block;
-    position: relative;
-    height: 85%;
-    width: 82%;
-    border: 5px solid var(--primary-black);
-    margin: 20px auto 10px auto;
-    padding: 10px;
-    border-radius: 20px;
-    overflow: hidden;
-}
-
-.project-slider{
-    position: relative;
-    height: 100%;
-    width: fit-content;
-    margin: auto;
-    display: block;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    touch-action: none; --ends here
-    position: relative;
-    display: inline-block;
-    height: 100%;
-    width: 100%;
-    margin-top: 2%;
-    white-space: nowrap;
-    transition: 700ms ease;
-}
-
-.project-slide{
-    position: relative;
-    display: inline-block;
-    margin: 0px 1%;
-    width: 99%;
-    height: 96.5%;
-    opacity: 1;
-    transition: 300ms;
-    border-radius: 15px;
-    overflow: hidden;
-    border: 5px solid transparent;  -- add this for super ceneter
-    scroll-snap-align: center;
-    scroll-behavior: smooth;
-    scroll-snap-stop: always; -- end here
-    position: relative;
-    display: inline-block;
-    visibility: hidden;
-    width: 99%;
-    height: 96%;
-    margin: 0 0.5%;
-    border-radius: 15px;
-    overflow: hidden;
-}
-
-*/
-
 .project-slide-active{
     opacity: 1;
 }
-
 
 .project-content{
     position: absolute;
@@ -740,9 +673,8 @@ button{
 .socials{
     list-style-type: none;
     position: relative;
-    margin: auto;
+    margin: 50px auto 10px auto;
     width: 300px;
-    top: 10%;
 }
 
 .socials li{
@@ -844,7 +776,7 @@ button{
         display: inline-block;
         text-align: center;
         float: none;
-        transition: 2s;
+        transition: 1s;
     }
 
     .menu-btn{
@@ -917,6 +849,36 @@ button{
         padding: 20vh 5px;
         border-bottom: 2px solid var(--primary-grey);
     }
+        
+    .section-head{
+        width: 85%;
+        display: inline-block;
+        margin-bottom: 5px;
+    }
+
+    .section-heading{
+        font-size: 2rem;
+        padding: 3px;
+        border: 3.5px solid var(--primary-black);
+    }
+
+    .section-sub-heading{
+        font-size: 1.1rem;
+        padding: 1px 3px;
+        border: 3.5px solid var(--primary-black);
+        border-top: 0px;
+        margin: 0 auto;
+        float: none;
+        display: inline-block;
+    }
+
+    .section-text{
+        font-size: 0.8rem;
+        width: 85%;
+        margin: 10px auto 20px auto;
+        text-align: justify;
+    }
+
 
     /* =========================INTRO RESPONSIVE==================== */
         
@@ -952,21 +914,14 @@ button{
     .about-container{
         margin: auto;
         height: fit-content;
-        /* position: relative;
-        padding: 0;
-        touch-action: none;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x mandatory; */
     }
 
     .about-card{
         border-radius: 15px;
-        /* top: 0; */
-        height: 360px;
+        height: 300px;
         margin: auto 10px;
         border: 3px solid var(--primary-black);
-        /* pointer-events: none; */             /* causes click event to not work on mobile devices */
-        width: 240px;
+        width: 200px;
         scroll-snap-align: center;
         scroll-behavior: smooth;
         scroll-snap-stop: always;
@@ -988,20 +943,10 @@ button{
         font-size: 2em;
         font-weight: bold; 
     }
-    
-    .main-card{
-        position: relative;
-        transform: scale(1.2);
-        opacity: 100%;
-        display: inline-block;
-        border: 4px solid var(--primary-black);
-    }
 
-    .main-card .about-card-content{
-        height: 85.5%;
-        background: var(--primary-blue-vertical-gradient);
-        background-size: 400% 400%;
-        animation: gradient-animation 4s ease-in-out 0s infinite alternate;
+        
+    .about-card-active .about-card-content{
+        height: 85.8%;
     }
 
 
