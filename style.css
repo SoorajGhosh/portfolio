@@ -90,11 +90,18 @@ button{
     animation: gradient-animation 4s ease-in-out 0s infinite alternate;
 }
 
+
 /* ===============NavBar==================== */
 .nav{
     position: relative;
     display: inline-block;
     width: 100%;
+    /* position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--primary-blue-horizontal-gradient);
+    background-size: 200% 200%;
+    animation: gradient-animation 4s ease-in-out 0s infinite alternate; */
 }
 
 .nav-ul{
@@ -162,7 +169,6 @@ button{
     transition: 200ms ease-in-out;
 }
 
-
 .home-btn img:hover {
     height: 42px;
     width: 44px;    
@@ -171,6 +177,113 @@ button{
 .menu-btn{
     display: none;
 }
+
+
+/* ===============STICKY NAV ============*/
+.sticky-nav{
+    position: fixed;
+    bottom: 10px;
+    right: 50px;
+    height: fit-content;
+    width: 170px;
+    display: inline-block;
+    z-index: 2;
+    opacity: 0;
+    transition: 100ms;
+    overflow: hidden;
+}
+
+.falling-sticky-nav{
+    opacity: 1;
+    animation-name: sticky-nav-fall;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes sticky-nav-fall{
+    0%   {transform: translateY(-400%);}
+    80%  {transform: translateY(0%);}
+    95%  {transform: translateY(-5%);}
+    100% {transform: translateY(0%);}
+}
+
+.sticky-nav-item{
+    position: relative;
+    text-align:center;
+    display:table;
+    height: 35px;
+    width: 150px;
+    margin: 15px auto;
+    transition: 200ms;
+    border: 3px solid var(--primary-black);
+    border-radius: 5px;
+    transform: translateX(110%);
+    overflow: hidden;
+}
+
+.sticky-nav-item-show{
+    transform: translateX(0%);
+}
+
+.sticky-nav-target{
+    font-size: 1.2rem;
+    display: inline-block;
+    width: 110%;
+    height: 110%;
+    font-weight: bold;
+    display: table-cell;
+    vertical-align:middle;
+    background-color: var(--primary-white);
+    color: var(--primary-black);
+    transition: 200ms;
+}
+
+.sticky-nav-item:hover{
+    transform: scale(1.1);
+}
+
+.sticky-nav-item:hover .sticky-nav-target{
+    background: var(--primary-black);
+    color: var(--primary-white);
+}
+
+
+/* ==================== STICKY MENU ===============*/
+.sticky-menu-btn{
+    position: relative;
+    display: block;
+    float: right;
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    text-align: center;
+    transition: 200ms;
+    cursor: pointer;
+    border: 3px solid var(--primary-black);
+}
+
+.sticky-menu{
+    position: absolute;
+    display: inline-block;
+    top: 50%;
+    left: 10%;
+    transform: translateY(-50%);
+    background-color: var(--primary-black);
+    height: 6px;
+    border-radius: 4px;
+    width: 80%;
+    transition: 200ms;
+}
+
+.sticky-menu:first-child{
+    transform: translateY(-120%);
+}
+
+.sticky-menu:last-child{
+    transform: translateY(40%);
+    width: 55%;
+}
+
 
 
 
@@ -826,6 +939,12 @@ button{
     }
     
     
+    /*========= Sticky Nav =============*/
+    .sticky-nav{
+        display: none;
+    }
+
+
 
     /* =======================INNER================================ */
     .inner{

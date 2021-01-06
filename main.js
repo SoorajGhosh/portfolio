@@ -27,6 +27,11 @@ let uiElements = (function(){
         navUl : document.querySelector('.nav-ul'),
         targetBtns : document.querySelectorAll('.target-btn'),
 
+        // =============== STICKY NAV ==============
+        stickyNav: document.querySelector('.sticky-nav'),
+        stickyMenu: document.querySelector('.sticky-menu-btn'),
+        stickyNavItems: Array.from(document.querySelectorAll('.sticky-nav-item')),
+        
         // =============== ABOUT ===================
         aboutSection: document.querySelector('.about'),
         aboutDotContainer: document.querySelector('.about_dots_container'),
@@ -206,7 +211,7 @@ sliderObj.prototype.setActiveCard = function(activeCardIdx){
     this.cardContainer.style.transform = `translateX(${this.transformDist}px)`;
     this.activeActualCardIdx = parseInt(this.activeCard.dataset.card);  // setting an object property to the index of the actual card that is active
     this.activateDot(this.activeActualCardIdx)                          // Activating the current Dot
-    this.simultaneousChangingElementsArr && this.changeSimultaneous(); // &&: bcz we are checking if there is any element to be set active simultaneously or not
+    this.simultaneousChangingElementsArr && this.changeSimultaneous();  // &&: bcz we are checking if there is any element to be set active simultaneously or not
 };
 
 // Changing simultaneous elements function 
@@ -454,7 +459,7 @@ sliderObj.prototype.init = function(){
 
 
 
-// ================================= About Section ========================================
+// ================================= About Section =============================================
 
 function aboutFn(domEl){
     
@@ -575,66 +580,59 @@ function projectFn(domEl){
 
 
 
-// ================================= Project Section (fucnction Based) =======================================
-/*
 
-function projectFn(domEl){
+
+// =============================== Sticky Nav show hide and other functionalities ==============
+function stickyNavFn(domEl){
     
-    let activeProjectSlide=0;
-    let slideExtraWidth = 14;   // the padding margin and borders included in the slide width
-    let activeProjectSlidePos=(activeSlideIdx)=>activeSlideIdx*(domEl.projectSlides[activeSlideIdx].offsetWidth + slideExtraWidth); 
-
-
-    // CHange the project view by using the details button
-    const projectDetailsChangeFn = function(element){
-        // Activating the project details button
-        domEl.projectDetailsBtns.forEach((cur)=>cur.classList.remove('project-details-btn-active'));
-        element.classList.add('project-details-btn-active');
-        // Activating the correct Project Content in Project Display
-        domEl.projectContents.forEach((cur)=>cur.classList.remove('project-content-active'));
-        if (element.id==='project-prc') document.querySelectorAll('.project-process').forEach((cur)=>cur.classList.add('project-content-active'));
-        else if (element.id==='project-img') document.querySelectorAll('.project-image').forEach((cur)=>cur.classList.add('project-content-active'));
-        else if (element.id==='project-lrng') document.querySelectorAll('.project-learning').forEach((cur)=>cur.classList.add('project-content-active'));
-    }
-
-    // Moving Project Slides
-    const proejctMovementFn = function(element){
-        if (element.id === 'project-arrow-left') {
-            if (activeProjectSlide>0)activeProjectSlide--; 
-            else activeProjectSlide=domEl.projectSlides.length-1;
-        } else if (element.id === 'project-arrow-right') {
-            if (activeProjectSlide<domEl.projectSlides.length-1) activeProjectSlide++; 
-            else activeProjectSlide=0;
+    // Sticky Nav 
+    domEl.stickyMenu.addEventListener('click',()=>domEl.stickyNavItems.forEach((cur)=>{
+        let menu = Array.from(document.querySelectorAll('.sticky-menu')).pop();
+        if (cur.classList.contains('sticky-nav-item-show')){
+            cur.classList.remove('sticky-nav-item-show');
+            menu.style.width='55%';
+        } else {
+            cur.classList.add('sticky-nav-item-show');
+            menu.style.width='80%';
         }
-        //changing project names
-        domEl.projectNames.forEach((cur)=>cur.classList.remove('project-name-active'));
-        domEl.projectNames[activeProjectSlide].classList.add('project-name-active');
-        // Moving the slider
-        domEl.projectSlider.style.transform = `translateX(-${activeProjectSlidePos(activeProjectSlide)}px)`
-    
-    }
+    }));
 
-    
-    const projectAreaFn = (e) => {
-        // Passing target elements bcz closest is already decided otherwise other elements could interrupt capturing the right elements
-        if (e.target.closest('.project-arrow')){                                // ARROW CLICKED
-            proejctMovementFn(e.target.closest('.project-arrow'));   
-        } else if (e.target.closest('.project-details-btn')){                   // PROJECT DETAILS BTN CLICKED
-            projectDetailsChangeFn(e.target.closest('.project-details-btn'));
-        } else if (e.target.closest('.project-btn')){                           // PROJECT BTN CLICKED
-            console.log('A Project btn clicked');
+    // wrap up after an nav item is clicked 
+    // this will fix the go to top bug that keeps the sticky nav open when going down after going up once
+    document.querySelector('.sticky-nav').addEventListener('click',(e)=>{
+        if (e.target.closest('.sticky-nav-item')){
+            document.querySelectorAll('.sticky-nav-item').forEach((cur)=>cur.classList.remove('sticky-nav-item-show'));
+            Array.from(document.querySelectorAll('.sticky-menu')).pop().style.width='55%';
         }
-    }
+    })
 
-    document.querySelector('.project-name').classList.add('project-name-active')    // Adding the active name class to the first name to show it 
-    domEl.projectArea.addEventListener('click', projectAreaFn)
+    // Observer for sticky nav
+    let stickyNav = document.querySelector('.sticky-nav');
+    let nav = document.querySelector('.nav');
+    const showStickyNav = function (entries){
+        const [entry] = entries;
+        if (!entry.isIntersecting) stickyNav.classList.add('falling-sticky-nav');
+        else stickyNav.classList.remove('falling-sticky-nav');
+    }
+    const stickyNavObserver = new IntersectionObserver(showStickyNav,{root:null,threshold:0.1,rootMargin:'0px'})
+    stickyNavObserver.observe(nav)
+
+    // Smooth scrolling 
+    stickyNav.addEventListener('click', function(e){
+        e.preventDefault();
+        const section_id = e.target.closest('.sticky-nav-target')?.getAttribute('href');
+        if (!section_id) return;
+        document.querySelector(section_id).scrollIntoView({behavior:'smooth'});
+    });
+    
 }
 
-*/
 
 
 
-// ===============Controller (Combines all page component functions) ======================
+
+
+// ===============Controller (Combines all page component functions) ============================
 let controller = (function(){
     const dom = uiElements.dom;
 
@@ -646,7 +644,9 @@ let controller = (function(){
     aboutFn(dom);
 
     projectFn(dom);
-    
+
+    stickyNavFn(dom);
+
 })();
 
 
