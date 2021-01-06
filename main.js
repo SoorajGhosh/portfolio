@@ -611,8 +611,13 @@ function stickyNavFn(domEl){
     let nav = document.querySelector('.nav');
     const showStickyNav = function (entries){
         const [entry] = entries;
-        if (!entry.isIntersecting) stickyNav.classList.add('falling-sticky-nav');
-        else stickyNav.classList.remove('falling-sticky-nav');
+        if (!entry.isIntersecting) {
+            stickyNav.classList.add('falling-sticky-nav');
+        } else {
+            stickyNav.classList.remove('falling-sticky-nav');
+            document.querySelectorAll('.sticky-nav-item').forEach((cur)=>cur.classList.remove('sticky-nav-item-show'));
+            Array.from(document.querySelectorAll('.sticky-menu')).pop().style.width='55%';
+        }
     }
     const stickyNavObserver = new IntersectionObserver(showStickyNav,{root:null,threshold:0.1,rootMargin:'0px'})
     stickyNavObserver.observe(nav)
