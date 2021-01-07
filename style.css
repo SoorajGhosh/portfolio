@@ -96,12 +96,6 @@ button{
     position: relative;
     display: inline-block;
     width: 100%;
-    /* position: sticky;
-    top: 0;
-    z-index: 1;
-    background: var(--primary-blue-horizontal-gradient);
-    background-size: 200% 200%;
-    animation: gradient-animation 4s ease-in-out 0s infinite alternate; */
 }
 
 .nav-ul{
@@ -182,8 +176,8 @@ button{
 /* ===============STICKY NAV ============*/
 .sticky-nav{
     position: fixed;
-    bottom: 10px;
-    right: 50px;
+    bottom: 25px;
+    right: 55px;
     height: fit-content;
     width: 170px;
     display: inline-block;
@@ -196,14 +190,14 @@ button{
 .falling-sticky-nav{
     opacity: 1;
     animation-name: sticky-nav-fall;
-    animation-duration: 2s;
+    animation-duration: 3s;
     animation-timing-function: ease-in-out;
 }
 
 @keyframes sticky-nav-fall{
     0%   {transform: translateY(-400%);}
     80%  {transform: translateY(0%);}
-    95%  {transform: translateY(-5%);}
+    95%  {transform: translateY(-15%);}
     100% {transform: translateY(0%);}
 }
 
@@ -342,29 +336,58 @@ button{
 .section-text{
     font-size: 0.9rem;
     width: 85%;
-    margin: 20px auto 40px auto;
+    margin: 20px auto;
     text-align: justify;
 }
 
 
 /* =========================INTRO========================== */
 .intro{
+    padding: 10px 5px;
+    display: grid;
+    grid-column-gap: 20px;
+    grid-template-columns: auto auto;
+    justify-content: space-evenly;
+    grid-template-areas: 'intro-img intro-bio';
+}
 
+.intro-img{
+    position: relative;
+    grid-area: intro-img;
+    width: 450px;
+    height: 450px;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.intro-img img{
+    position: relative;
+    top: -50px;
+    height: 500px;
+    width: 750px;
+}
+
+.intro-bio{
+    position: relative;
+    grid-area: intro-bio;
+    width: 550px;
+    height: fit-content;
 }
 
 .intro-title{
-    font-size: 6.5em;
+    font-size: 5em;
     font-weight: bold;
 }
 
 .intro-subtext{
-    font-size: 3.5em;
+    font-size: 2.5em;
+    font-weight: bold;
 }
 
 .intro-text{
-    width: 85%;
-    font-size: 0.9rem;
-    margin: 50px auto;
+    width: 90%;
+    font-size: 0.85rem;
+    margin: 30px auto;
     text-align: justify;
 }
 
@@ -372,21 +395,33 @@ button{
     position: relative;
     display: inline-block;
     color: var(--primary-white);
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: bold;
-    margin: 15px auto;
+    margin: 5px auto;
     padding: 10px 20px;
     border: none;
     font-size: 1rem;
     border-radius: 8px;
-    background: var(--primary-background);
+    background-size: 400% 400%;
+    background: var(--primary-blue-horizontal-gradient);
     transition:  all .6s;
 }
 
 .intro-btn:hover {
     transform: scale(1.05);
-    background: var(--primary-blue);
 }
+
+
+
+/* ========================= STORY ========================== */
+.story{
+    height: fit-content;
+}
+
+.my-timeline{
+    display: none;
+}
+
 
 
 
@@ -724,7 +759,8 @@ button{
 
 .project-btn{
     position: relative;
-    background: var(--primary-background);
+    background-size: 400% 400%;
+    background: var(--primary-blue-horizontal-gradient);
     border: 3px;
     font-size: 1rem;
     font-weight: bold;
@@ -735,7 +771,7 @@ button{
     margin: 5px 10px;
     transition: 300ms;
     cursor: pointer;
-    border: 3px solid var(--primary-background);
+    border: 3px solid var(--primary-blue-horizontal-gradient);
     overflow: hidden;
 }
 
@@ -1000,7 +1036,31 @@ button{
 
 
     /* =========================INTRO RESPONSIVE==================== */
-        
+    .intro{
+        height: fit-content;
+        padding: 10px;
+        padding-bottom: 40px;
+        margin: 0 auto;
+        grid-column-gap: 0;
+        grid-row-gap: 20px;
+        grid-template-rows: auto auto;
+        grid-template-areas: 'intro-img' 
+                            'intro-bio';
+    }
+    
+    .intro-img{
+        width: 100%;
+        border-radius: 20px;
+    }
+
+    .intro img{
+        left: -20px;
+    }
+
+    .intro-bio{
+        width: 100%;
+    }
+
     .intro-title{
         font-size: 3rem;
         font-weight: bold;
@@ -1011,6 +1071,7 @@ button{
     }
 
     .intro-text{
+        display: none;
         font-size: 0.85rem;
         width: 90%;
         margin: 30px auto;
