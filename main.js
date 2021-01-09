@@ -32,6 +32,13 @@ let uiElements = (function(){
         stickyMenu: document.querySelector('.sticky-menu-btn'),
         stickyNavItems: Array.from(document.querySelectorAll('.sticky-nav-item')),
         
+        // =============== STORY ===================
+        timeline: document.querySelector('.my-timeline'),
+        timeConnectLine: document.querySelector('.time-connect-line'),
+        timeStamps: Array.from(document.querySelectorAll('.time-stamp')),
+        timeYears: Array.from(document.querySelectorAll('.time-year')),
+        timeSummaries: Array.from(document.querySelectorAll('.time-summary')),
+
         // =============== ABOUT ===================
         aboutSection: document.querySelector('.about'),
         aboutDotContainer: document.querySelector('.about_dots_container'),
@@ -87,7 +94,7 @@ function navbarFn(domEl){
         e.preventDefault();
         const section_id = e.target.closest('.nav-target')?.getAttribute('href');
         if (!section_id) return;
-        (section_id!=='#intro-section') ? showNav():undefined;
+        (!e.target.closest('.home-btn')) ? showNav():undefined;
         document.querySelector(section_id).scrollIntoView({behavior:'smooth'});
     });
 
@@ -488,8 +495,6 @@ function aboutFn(domEl){
 
 
 
-
-
 // ================================= OOP Project Section =======================================
 
 function projectFn(domEl){
@@ -637,6 +642,42 @@ function stickyNavFn(domEl){
 
 
 
+// =============================== Story section fucntions =====================================
+function storyFn(domEl){
+    const timeline = domEl.timeline;
+    const timeConnectLine = domEl.timeConnectLine;
+    const timeStamps = domEl.timeStamps;
+
+    // USING OBSERVER
+    const storyConnectLine = function(entries){
+        [entry] = entries;
+        if (entry.isIntersecting) {
+            entry.target.querySelector('.time-summary').classList.add('activate-time-summary');
+            entry.target.querySelector('.time-year').classList.add('activate-time-year');
+        } else if (!entry.isIntersecting) {
+            entry.target.querySelector('.time-summary').classList.remove('activate-time-summary')
+            entry.target.querySelector('.time-year').classList.remove('activate-time-year');
+        };
+
+    }
+    
+    const connectOptions = {
+        root: null,
+        threshold: 0.5,
+        rootMargin: `-${window.innerHeight/2-timeStamps[0].clientHeight/2+20}px 0px `,
+    }
+    
+    const timelineObserver = new IntersectionObserver(storyConnectLine, connectOptions);
+    timeStamps.forEach((cur)=>timelineObserver.observe(cur));
+    
+
+}
+
+
+
+
+
+
 // ===============Controller (Combines all page component functions) ============================
 let controller = (function(){
     const dom = uiElements.dom;
@@ -645,6 +686,8 @@ let controller = (function(){
     navbarFn(dom);
     
     targetAnchorsFn(dom);
+
+    storyFn(dom);
 
     aboutFn(dom);
 
