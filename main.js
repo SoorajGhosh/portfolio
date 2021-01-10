@@ -645,18 +645,19 @@ function stickyNavFn(domEl){
 // =============================== Story section fucntions =====================================
 function storyFn(domEl){
     const timeline = domEl.timeline;
+    const timeYears = domEl.timeYears;
     const timeConnectLine = domEl.timeConnectLine;
     const timeStamps = domEl.timeStamps;
 
-    // USING OBSERVER
+    //  OBSERVING YEAR FUNCTION
     const storyConnectLine = function(entries){
         [entry] = entries;
         if (entry.isIntersecting) {
-            entry.target.querySelector('.time-summary').classList.add('activate-time-summary');
-            entry.target.querySelector('.time-year').classList.add('activate-time-year');
+            entry.target.closest('.time-stamp').querySelector('.time-summary').classList.add('activate-time-summary');
+            entry.target.classList.add('activate-time-year');
         } else if (!entry.isIntersecting) {
-            entry.target.querySelector('.time-summary').classList.remove('activate-time-summary')
-            entry.target.querySelector('.time-year').classList.remove('activate-time-year');
+            entry.target.closest('.time-stamp').querySelector('.time-summary').classList.remove('activate-time-summary')
+            entry.target.classList.remove('activate-time-year');
         };
 
     }
@@ -668,7 +669,7 @@ function storyFn(domEl){
     }
     
     const timelineObserver = new IntersectionObserver(storyConnectLine, connectOptions);
-    timeStamps.forEach((cur)=>timelineObserver.observe(cur));
+    timeYears.forEach((cur)=>timelineObserver.observe(cur));
     
 
 }
