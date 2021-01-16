@@ -188,29 +188,18 @@ button{
 /* ===============STICKY NAV ============*/
 .sticky-nav{
     position: fixed;
-    bottom: 25px;
+    bottom: 85px;
     right: 55px;
     height: fit-content;
     width: 170px;
     display: inline-block;
-    z-index: 2;
-    opacity: 0;
     transition: 100ms;
     overflow: hidden;
+    z-index: 0;
 }
 
-.falling-sticky-nav{
-    opacity: 1;
-    animation-name: sticky-nav-fall;
-    animation-duration: 1.5s;
-    animation-timing-function: ease-in-out;
-}
-
-@keyframes sticky-nav-fall{
-    0%   {transform: translateY(-200%);}
-    80%  {transform: translateY(0%);}
-    95%  {transform: translateY(-15%);}
-    100% {transform: translateY(0%);}
+.sticky-nav-show{
+    z-index: 2;
 }
 
 .sticky-nav-item{
@@ -256,9 +245,10 @@ button{
 
 /* ==================== STICKY MENU ===============*/
 .sticky-menu-btn{
-    position: relative;
-    display: block;
-    float: right;
+    position: fixed;
+    display: inline-block;
+    bottom: 25px;
+    right: 55px;
     height: 50px;
     width: 50px;
     border-radius: 50px;
@@ -266,6 +256,8 @@ button{
     transition: 200ms;
     cursor: pointer;
     border: 3px solid var(--primary-black);
+    z-index: 1;
+    opacity: 0;
 }
 
 .sticky-menu{
@@ -288,6 +280,20 @@ button{
 .sticky-menu:last-child{
     transform: translateY(40%);
     width: 55%;
+}
+
+.falling-sticky-menu{
+    opacity: 1;
+    animation-name: sticky-menu-fall;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes sticky-menu-fall{
+    0%   {transform: translateY(-1100%);}
+    80%  {transform: translateY(0%);}
+    95%  {transform: translateY(-110%);}
+    100% {transform: translateY(0%);}
 }
 
 
@@ -352,6 +358,10 @@ button{
     text-align: justify;
 }
 
+.target-btn{
+    font-style: italic;
+    color: var(--primary-blue);    
+}
 
 /* =========================INTRO========================== */
 .intro{
@@ -384,6 +394,8 @@ button{
     grid-area: intro-bio;
     width: 550px;
     height: fit-content;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .intro-title{
@@ -649,19 +661,35 @@ button{
 }
 
 .about-card-title{
+    position: relative;
     font-size: 2.5rem;
     font-weight: bold; 
 }
 
 .about-card-content{
     position: relative;
-    display: block;
+    display: inline-block;
     margin: auto;
     width: 96%;
     height: 15%;
     border-radius: 15px;
     background: var(--primary-blue-vertical-gradient);
     transition: 1s;
+    padding: 15px;
+    color: var(--primary-white);
+    white-space: normal;
+    text-align: justify;
+    vertical-align: top;
+}
+
+.about-card-content-text{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: auto;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: 2s;
 }
 
 .about-card-active .about-card-content{
@@ -672,6 +700,9 @@ button{
     animation: gradient-animation 4s ease-in-out 0s infinite alternate;
 }
 
+.about-card-active .about-card-content-text{
+    opacity: 1;
+}
 
 
 
@@ -925,6 +956,32 @@ button{
 }
 
 
+
+/* ===============================BLOG================================ */
+.blogs{
+    display: block;
+    width: 85%;
+    margin: 20px auto;
+}
+
+.blog-block{
+    display: inline-block;
+    font-size: 0.85rem;
+    text-align: justify;
+    margin: 10px;
+    width: 270px;
+    height: 320px;
+    padding: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid black;
+}
+
+.blog-head{
+    font-size: 1.15rem;
+    font-weight: bold;
+    margin: 10px 0px;
+}
 
 /* ===============================CONTACT================================ */
 .socials{
@@ -1258,11 +1315,14 @@ button{
     }
 
     .about-card-title{
-        font-size: 2em;
+        font-size: 1.7em;
         font-weight: bold; 
     }
 
-        
+    .about-card-content-text{
+        font-size: 0.8rem;
+    }
+
     .about-card-active .about-card-content{
         height: 85.8%;
     }

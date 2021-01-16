@@ -124,6 +124,65 @@ function targetAnchorsFn(domEl){
 
 
 
+// =============================== Sticky Nav show hide and other functionalities ==============
+function stickyNavFn(domEl){
+    function showStickyNav(){
+        domEl.stickyNavItems.forEach((cur)=>{
+            let menuLastDash = Array.from(document.querySelectorAll('.sticky-menu')).pop();
+            if (cur.classList.contains('sticky-nav-item-show')){
+                cur.classList.remove('sticky-nav-item-show');               
+                menuLastDash.style.width='55%';                             
+                document.querySelector('.sticky-nav').classList.remove('sticky-nav-show');  // this comes last bcz let all av items disappers then it will disappear
+            } else {
+                document.querySelector('.sticky-nav').classList.add('sticky-nav-show');     // show sticky nav & its first bcz 1st this will be visible then nav items
+                cur.classList.add('sticky-nav-item-show');                                  // Showing the menu items
+                menuLastDash.style.width='80%';                                             // menu line size
+            }
+        })
+    }
+
+    // click menu to show sticky nav
+    domEl.stickyMenu.addEventListener('click',showStickyNav);
+
+    // wrap up after an nav item is clicked 
+    // this will fix the go to top bug that keeps the sticky nav open when going down after going up once
+    document.querySelector('.sticky-nav').addEventListener('click',(e)=>{
+        if (e.target.closest('.sticky-nav-item')){
+            document.querySelectorAll('.sticky-nav-item').forEach((cur)=>cur.classList.remove('sticky-nav-item-show'));
+            Array.from(document.querySelectorAll('.sticky-menu')).pop().style.width='55%';
+        }
+    })
+
+    // Observer for nav to show the sticky menu when the nav is not visible
+    let nav = document.querySelector('.nav');
+    const showStickyMenu = function (entries){
+        const [entry] = entries;
+        if (!entry.isIntersecting) {
+            domEl.stickyMenu.classList.add('falling-sticky-menu');
+        } else {
+            domEl.stickyMenu.classList.remove('falling-sticky-menu');
+            document.querySelectorAll('.sticky-nav-item').forEach((cur)=>cur.classList.remove('sticky-nav-item-show'));
+            Array.from(document.querySelectorAll('.sticky-menu')).pop().style.width='55%';
+        }
+    }
+    const stickyNavObserver = new IntersectionObserver(showStickyMenu,{root:null,threshold:0.1,rootMargin:'0px'})
+    stickyNavObserver.observe(nav)
+
+    // Smooth scrolling 
+    document.querySelector('.sticky-nav').addEventListener('click', function(e){
+        e.preventDefault();
+        const section_id = e.target.closest('.sticky-nav-target')?.getAttribute('href');
+        if (!section_id) return;
+        document.querySelector(section_id).scrollIntoView({behavior:'smooth'});
+    });
+    
+}
+
+
+
+
+
+
 
 // ======================= SLIDER FUCNTION CONSTRUCTOR ========================
 {
@@ -475,7 +534,7 @@ function aboutFn(domEl){
         cardContainer: domEl.aboutContainer, 
         actualCards: domEl.aboutCards, 
         slideMoveWidth: (mobileView?(domEl.aboutWrap.clientWidth/4.5):(domEl.aboutWrap.clientWidth)/2), 
-        defaultInterval:3000, 
+        defaultInterval: 5000, 
         activeCardClassName: 'about-card-active', 
         dotContainer: document.querySelector('.about_dots_container'),
         cardType: 'about',
@@ -487,6 +546,10 @@ function aboutFn(domEl){
     })
 
     aboutSliderObj.init()
+
+    // stopping the auto slide function when hovered over the about wrap
+    domEl.aboutWrap.addEventListener('mouseenter', ()=>{clearTimeout(aboutSliderObj.timerFn)});
+    domEl.aboutWrap.addEventListener('mouseleave', ()=>{clearTimeout(aboutSliderObj.timerFn);aboutSliderObj.moveCardContainerAtInervalFn(aboutSliderObj.timerInterval)});       // declaring clear timeout for sliderbject before restarting the movements fixes the bug for movement after clicking a slide 
     
 }
 
@@ -580,61 +643,6 @@ function projectFn(domEl){
     domEl.projectFrame.addEventListener('mouseleave', ()=>{projectSliderObj.moveCardContainerAtInervalFn(projectSliderObj.timerInterval)});
    
 
-}
-
-
-
-
-
-
-// =============================== Sticky Nav show hide and other functionalities ==============
-function stickyNavFn(domEl){
-    
-    // Sticky Nav 
-    domEl.stickyMenu.addEventListener('click',()=>domEl.stickyNavItems.forEach((cur)=>{
-        let menu = Array.from(document.querySelectorAll('.sticky-menu')).pop();
-        if (cur.classList.contains('sticky-nav-item-show')){
-            cur.classList.remove('sticky-nav-item-show');
-            menu.style.width='55%';
-        } else {
-            cur.classList.add('sticky-nav-item-show');
-            menu.style.width='80%';
-        }
-    }));
-
-    // wrap up after an nav item is clicked 
-    // this will fix the go to top bug that keeps the sticky nav open when going down after going up once
-    document.querySelector('.sticky-nav').addEventListener('click',(e)=>{
-        if (e.target.closest('.sticky-nav-item')){
-            document.querySelectorAll('.sticky-nav-item').forEach((cur)=>cur.classList.remove('sticky-nav-item-show'));
-            Array.from(document.querySelectorAll('.sticky-menu')).pop().style.width='55%';
-        }
-    })
-
-    // Observer for sticky nav
-    let stickyNav = document.querySelector('.sticky-nav');
-    let nav = document.querySelector('.nav');
-    const showStickyNav = function (entries){
-        const [entry] = entries;
-        if (!entry.isIntersecting) {
-            stickyNav.classList.add('falling-sticky-nav');
-        } else {
-            stickyNav.classList.remove('falling-sticky-nav');
-            document.querySelectorAll('.sticky-nav-item').forEach((cur)=>cur.classList.remove('sticky-nav-item-show'));
-            Array.from(document.querySelectorAll('.sticky-menu')).pop().style.width='55%';
-        }
-    }
-    const stickyNavObserver = new IntersectionObserver(showStickyNav,{root:null,threshold:0.1,rootMargin:'0px'})
-    stickyNavObserver.observe(nav)
-
-    // Smooth scrolling 
-    stickyNav.addEventListener('click', function(e){
-        e.preventDefault();
-        const section_id = e.target.closest('.sticky-nav-target')?.getAttribute('href');
-        if (!section_id) return;
-        document.querySelector(section_id).scrollIntoView({behavior:'smooth'});
-    });
-    
 }
 
 
