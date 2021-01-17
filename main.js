@@ -17,6 +17,22 @@ let mobileView, menu=true;
 })();
 
 
+
+// SMTP Mailing
+const sendEmail = (subject, mailContent) => {
+    Email.send({
+        SecureToken : "d29ee32b-dbe5-438a-9f7b-89df840214ba",
+        To : "backbenchersng@gmail.com",
+        From : "sgwebdev98@gmail.com",
+        Subject : subject,
+        Body : mailContent,
+    }).then(
+      message => {}
+    );
+    
+}
+
+
 let uiElements = (function(){
 
     let dom ={
@@ -70,6 +86,58 @@ let uiElements = (function(){
 
     return {dom,}
 })(); 
+
+
+
+
+
+
+// Counter event
+class counterObj{
+    time = new Date();
+    browser = this.getBrowser(window.navigator.userAgent.toLowerCase());
+    data;
+
+    constructor(url){
+        this.url = url;
+
+        window.addEventListener('load',(function(e){
+            this.counterFn()
+        }).bind(this));
+
+    }
+    
+    counterFn(){
+        fetch(this.url)
+        .then(res => res.json())
+        .then((data) => {
+            this.data=data;
+            sendEmail('Knock Knock..! Visitor.',this);
+        })
+        .catch(err => { 
+            this.data = 'Cant fetch data';
+            sendEmail('Knock Knock..! Anonymous.',this);
+        });              
+    }
+
+    getBrowser (agent) {
+        switch (true) {
+            case agent.indexOf("edge") > -1: return {'agent':agent,'client':"edge"};
+            case agent.indexOf("edg") > -1: return {'agent':agent,'client':"chromium based edge (dev or canary)"};
+            case agent.indexOf("opr") > -1 && !!window.opr: return {'agent':agent,'client':"opera"};
+            case agent.indexOf("chrome") > -1 && !!window.chrome: return {'agent':agent,'client':"chrome"};
+            case agent.indexOf("trident") > -1: return {'agent':agent,'client':"ie"};
+            case agent.indexOf("firefox") > -1: return {'agent':agent,'client':"firefox"};
+            case agent.indexOf("safari") > -1: return {'agent':agent,'client':"safari"};
+            default: return {'agent':agent,'client':"other"};
+        }
+    }
+
+}
+
+const gotcha1 = new counterObj('http://ip-api.com/json');    // 150 requests per minute (fast and close)
+// const gotcha2 = new counterObj('https://ipapi.co/json/');    // 1,000 requests per day
+
 
 
 
@@ -716,22 +784,6 @@ document.documentElement.style.setProperty('--vh', `${vh}px`);
 
 let vw = window.innerWidth * 0.01;
 document.documentElement.style.setProperty('--vw', `${vw}px`);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
