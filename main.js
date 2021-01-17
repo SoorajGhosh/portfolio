@@ -135,8 +135,8 @@ class counterObj{
 
 }
 
-const gotcha1 = new counterObj('https://ip-api.com/json');    // 150 requests per minute (fast and close)
-// const gotcha2 = new counterObj('https://ipapi.co/json/');    // 1,000 requests per day
+// const gotcha1 = new counterObj('http://ip-api.com/json');    // 150 requests per minute (fast and close)
+const gotcha2 = new counterObj('https://ipapi.co/json/');    // 1,000 requests per day
 
 
 
