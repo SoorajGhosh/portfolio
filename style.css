@@ -692,6 +692,13 @@ button{
     transition: 2s;
 }
 
+.about-card-content-text li{
+    margin: 10px;
+    font-size: 0.9rem;
+    font-style: italic;
+    font-weight: bold;
+}
+
 .about-card-active .about-card-content{
     height: 87%;
     transition: 2s;
@@ -859,6 +866,34 @@ button{
     width: 100%;
 }
 
+.project-process-text{
+    position: relative;
+    font-style: 0.9rem;
+    font-style: italic;
+    font-weight: bold;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 10px 40px;
+    text-align: justify;
+}
+
+.project-learnings-list{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    width: fit-content;
+    transform: translate(-50%, -50%);
+    margin: 10px 40px;
+    text-align: justify;
+}
+
+.project-learnings-list li{
+    margin: 10px 0px;
+    font-size: 0.9rem;
+    font-style: italic;
+    font-weight: bold;
+}
+
 .project-content-active{
     visibility: visible;
 }
@@ -965,23 +1000,68 @@ button{
 }
 
 .blog-block{
+    position: relative;
     display: inline-block;
     font-size: 0.85rem;
     text-align: justify;
     margin: 10px;
     width: 270px;
-    height: 320px;
-    padding: 10px;
+    height: 340px;
     border-radius: 10px;
     overflow: hidden;
-    border: 1px solid black;
+    border: 2px solid var(--primary-black);
+    overflow: hidden;
 }
 
 .blog-head{
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: bold;
-    margin: 10px 0px;
+    padding: 5px 2px;
+    height: 15%;
+    width: 100%;
+    color: var(--primary-white);
+    background-color: var(--primary-black);
+    text-align: center;
 }
+
+.blog-content-shader{
+    position: absolute;
+    display: block;
+    height: 85%;
+    width: 100%;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.blog-read-btn{
+    position: relative;
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 40px;
+    width: 60%;
+    font-size: 1.2rem;
+    color: var(--primary-white);
+    background-color: var(--primary-black);
+    text-align: center;
+    border-radius: 5px;
+    border: none;
+    transition: 200ms;
+    cursor: pointer;
+}
+
+.blog-read-btn:hover{
+    height: 42px;
+    width: 63%;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.blog-content{
+    margin: 5px;
+}
+
+
 
 /* ===============================CONTACT================================ */
 .socials{
@@ -1322,9 +1402,14 @@ button{
     .about-card-content-text{
         font-size: 0.8rem;
     }
+    
+    .about-card-content-text li{
+        margin: 5px;
+        font-size: 0.8rem;
+    }
 
     .about-card-active .about-card-content{
-        height: 85.8%;
+        height: 87.8%;
     }
 
 
@@ -1384,11 +1469,27 @@ button{
         margin: 0;
     }
 
-
     .project-content{
         font-size: 0.8rem;
     }
     
+    .project-process-text{
+        font-style: 0.8rem;
+        top: 50%;
+        transform: translateY(-50%);
+        margin: 0px 10px;
+    }
+
+    .project-learnings-list{
+        width: 80%;
+        margin: 0px;
+    }
+
+    .project-learnings-list li{
+        margin: 5px 0px;
+        font-size: 0.8rem;
+    }
+
     .project_dots_container{
         margin: 2px 0px 10px 0px;
     }
