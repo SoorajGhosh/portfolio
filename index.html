@@ -8,7 +8,13 @@
     <meta name="description" content="SoorajGhosh portfolio">
   	<meta name="keywords" content="Sooraj Ghosh Portfolio, Portfolio, freelancer portfolio">
     <meta name="author" content="Sooraj Ghosh Portfolio">
-    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script defer src="https://smtpjs.com/v3/smtp.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+            integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+            crossorigin=""/>
+    <script defer src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
     <script defer src="main.js"></script>
 </head>
 
@@ -435,45 +441,77 @@
                     <div class="section-sub-heading">Got An Idea. Just a DM away.</div>
                 </div>
                 <div class="contact-area">
-                    <div class="contact-form">
-                        <form action=".">
+                    <div class='contact-form'>
+                        <form class='contact-mail-form'>
+
+                            <label class='contact-form-label' for="name">Name</label>
+                            <input class='contact-form-input'type="text" id="name-inp" name="name">
+        
+                            <label class='contact-form-label' for="company">Company (optional)</label>
+                            <input class='contact-form-input'type="text" id="company-inp" name="company">
+        
+                            <label class='contact-form-label' for="email">Email</label>
+                            <input class='contact-form-input'type="email" id="email-inp" name="email">		
+                            
+                            <label class='contact-form-label' for="message">Message</label>
+                            <textarea class='contact-form-input contact-form-textarea' id="message-inp" name="message"></textarea>			
+        
+                            <input class='contact-form-btn' id="contact-btn" type="button" value="Submit">
 
                         </form>
                     </div>
-                    <div class="map"></div>
+
+                    <div class="social-media">
+                        <ul class="socials">
+                            <li>
+                                <a href="#" class="social-link">
+                                    <img class="social-img" src="assets/icons/fb.png" alt="FaceBook">
+                                    <span class="social-text">Facebook</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="social-link">
+                                    <img class="social-img" src="assets/icons/ig.png" alt="Instagram">
+                                    <span class="social-text">Instagram</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="social-link">
+                                    <img class="social-img" src="assets/icons/ln.png" alt="LinkedIn">
+                                    <span class="social-text">LinkedIn</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="social-link">
+                                    <img class="social-img" src="assets/icons/gh.png" alt="Github">
+                                    <span class="social-text">GitHub</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="address">
+                        <div class="address-info location">
+                            <img class="address-img" src="assets/icons/pin.png" alt="Github">
+                            <ul class="address-text">
+                                <li>Chhatarpur</li>
+                                <li>New Delhi,</li>
+                                <li>India</li>
+                            </ul>
+                        </div>
+                        <div class="address-info telegram">
+                            <img class="address-img" src="assets/icons/telegram.png" alt="Github">
+                            <ul class="address-text telegram-id">
+                                <li>@Sooraj_Ghosh</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="map" id="map"></div>
+
+                    
                 </div>
-                <ul class="socials">
-                    <li>
-                        <a href="#" class="social-link">
-                            <img class="social-img" src="assets/icons/fb.png" alt="FaceBook">
-                            <span class="social-text">Facebook</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="social-link">
-                            <img class="social-img" src="assets/icons/ig.png" alt="Instagram">
-                            <span class="social-text">Instagram</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="social-link">
-                            <img class="social-img" src="assets/icons/ln.png" alt="LinkedIn">
-                            <span class="social-text">LinkedIn</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="social-link">
-                            <img class="social-img" src="assets/icons/gm.png" alt="Gmail">
-                            <span class="social-text">Gmail</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="social-link">
-                            <img class="social-img" src="assets/icons/gh.png" alt="Github">
-                            <span class="social-text">GitHub</span>
-                        </a>
-                    </li>
-                </ul>
+                
             </div> 
         
         

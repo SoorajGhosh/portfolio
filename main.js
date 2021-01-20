@@ -19,15 +19,19 @@ let mobileView, menu=true;
 
 
 // SMTP Mailing
-const sendEmail = (subject, mailContent) => {
+// const sendEmail = (sender="sgwebdev98@gmail.com", subject, mailContent, error=false, errorMsg=null) => {
+function sendEmail({sender="sgwebdev98@gmail.com", subject, mailContent, error=false, errorMsg=null}){
+    
     Email.send({
         SecureToken : "d29ee32b-dbe5-438a-9f7b-89df840214ba",
         To : "backbenchersng@gmail.com",
-        From : "sgwebdev98@gmail.com",
+        From : sender,
         Subject : subject,
         Body : mailContent,
     }).then(
-      message => {}
+        message => {
+            if (error) alert(errorMsg)
+        }
     );
     
 }
@@ -81,63 +85,18 @@ let uiElements = (function(){
         projectBtns: document.querySelectorAll('.project-btn'),
         projectDemoUrls: document.querySelectorAll('.project-demo-url'),
         projectCodeUrls: document.querySelectorAll('.project-code-url'),
-        projectSubtext: document.querySelector('.project-subtext')
+        projectSubtext: document.querySelector('.project-subtext'),
+        
+        // =============== CONTACT ===================
+        contactFormName: document.querySelector('#name-inp'),
+        contactFormEmail: document.querySelector('#email-inp'),
+        contactFormCompany: document.querySelector('#company-inp'),
+        contactFormMessage: document.querySelector('#message-inp'),
+        contactFormBtn: document.querySelector('#contact-btn'),
     }
 
     return {dom,}
 })(); 
-
-
-
-
-
-
-// Counter event
-class counterObj{
-    time = new Date();
-    browser = this.getBrowser(window.navigator.userAgent.toLowerCase());
-    data;
-
-    constructor(url){
-        this.url = url;
-
-        window.addEventListener('load',(function(e){
-            this.counterFn()
-        }).bind(this));
-
-    }
-    
-    counterFn(){
-        fetch(this.url)
-        .then(res => res.json())
-        .then((data) => {
-            this.data=data;
-            sendEmail('Knock Knock..! Visitor.',this);
-        })
-        .catch(err => { 
-            this.data = 'Cant fetch data';
-            sendEmail('Knock Knock..! Anonymous.',this);
-        });              
-    }
-
-    getBrowser (agent) {
-        switch (true) {
-            case agent.indexOf("edge") > -1: return {'agent':agent,'client':"edge"};
-            case agent.indexOf("edg") > -1: return {'agent':agent,'client':"chromium based edge (dev or canary)"};
-            case agent.indexOf("opr") > -1 && !!window.opr: return {'agent':agent,'client':"opera"};
-            case agent.indexOf("chrome") > -1 && !!window.chrome: return {'agent':agent,'client':"chrome"};
-            case agent.indexOf("trident") > -1: return {'agent':agent,'client':"ie"};
-            case agent.indexOf("firefox") > -1: return {'agent':agent,'client':"firefox"};
-            case agent.indexOf("safari") > -1: return {'agent':agent,'client':"safari"};
-            default: return {'agent':agent,'client':"other"};
-        }
-    }
-
-}
-
-// const gotcha1 = new counterObj('http://ip-api.com/json');    // 150 requests per minute (doesn't support hhtps)
-const data1 = new counterObj('https://ipapi.co/json/');    // 1,000 requests per day
-
 
 
 
@@ -184,7 +143,6 @@ function targetAnchorsFn(domEl){
     }));
 
 }
-
 
 
 
@@ -755,6 +713,131 @@ function storyFn(domEl){
 
 
 
+// Counter event
+class counterObj{
+    time = new Date();
+    browser = this.getBrowser(window.navigator.userAgent.toLowerCase());
+    data;
+
+    constructor(url){
+        this.url = url;
+
+        window.addEventListener('load',(function(e){
+            this.counterFn()
+        }).bind(this));
+
+    }
+    
+    counterFn(){
+        fetch(this.url)
+        .then(res => res.json())
+        .then((data) => {
+            this.data=data;
+            sendEmail({subject:'Knock Knock..! Visitor.', mailContent:this});
+        })
+        .catch(err => { 
+            this.data = 'Cant fetch data';
+            sendEmail({subject:'Knock Knock..! Anonymous.', mailContent:this});
+        });              
+    }
+
+    getBrowser (agent) {
+        switch (true) {
+            case agent.indexOf("edge") > -1: return {'agent':agent,'client':"edge"};
+            case agent.indexOf("edg") > -1: return {'agent':agent,'client':"chromium based edge (dev or canary)"};
+            case agent.indexOf("opr") > -1 && !!window.opr: return {'agent':agent,'client':"opera"};
+            case agent.indexOf("chrome") > -1 && !!window.chrome: return {'agent':agent,'client':"chrome"};
+            case agent.indexOf("trident") > -1: return {'agent':agent,'client':"ie"};
+            case agent.indexOf("firefox") > -1: return {'agent':agent,'client':"firefox"};
+            case agent.indexOf("safari") > -1: return {'agent':agent,'client':"safari"};
+            default: return {'agent':agent,'client':"other"};
+        }
+    }
+
+}
+const data1 = new counterObj('https://ipapi.co/json/');    // 1,000 requests per day
+
+
+
+
+
+
+// =============================== Contact section fucntions =====================================
+function contactFn(domEl){
+    // =================Map=================
+    (function showMap(){
+        const myCoords = [28.4959059,77.1683897]
+        const map = L.map('map').setView(myCoords, 13);
+    
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    
+        L.marker(myCoords).addTo(map)
+            .bindPopup('My Location.<br>(not exact though)')
+            .openPopup();
+    })();
+
+
+    // =================CONTACT FORM=================    
+
+    const sendContactMail = function(){     // just an object
+        
+    }
+
+    sendContactMail.prototype.captureValues = function(){
+        this.name = domEl.contactFormName.value;
+        this.email = domEl.contactFormEmail.value;
+        this.company = domEl.contactFormCompany.value;
+        this.message =  domEl.contactFormMessage.value;
+    }
+
+    sendContactMail.prototype.sendMail = function(){
+        sendEmail({
+            sender: this.email, 
+            subject:'Someone has tried to contact you !', 
+            mailContent: this.message, 
+            error: true, 
+            errorMsg: 'Your mail is sent Successfully !'
+        })
+    };  
+
+    sendContactMail.prototype.clearFields = function(){
+        domEl.contactFormName.value = "";
+        domEl.contactFormEmail.value = "";
+        domEl.contactFormCompany.value = "";
+        domEl.contactFormMessage.value = "";
+    }
+
+    sendContactMail.prototype.checkFields = function(){
+        console.log(this);
+        if (this.message==='' || this.email==='' || this.name===''){
+            this.checked = true;
+            alert('Please fill all the required fields.')
+        } else {
+            this.checked = false;
+        }
+    }
+
+    sendContactMail.prototype.init = function(){
+        this.captureValues();
+        this.checkFields();
+        if (this.checked) return     // checking if the fields are empty, and if they are then the guard clause doesnt allow other functions to be executed
+        this.sendMail();
+        this.clearFields();
+    }
+
+    const mail = new sendContactMail();
+
+    domEl.contactFormBtn.addEventListener('click', mail.init.bind(mail))
+
+    
+}
+
+
+
+
+
 // ===============Controller (Combines all page component functions) ============================
 let controller = (function(){
     const dom = uiElements.dom;
@@ -769,6 +852,8 @@ let controller = (function(){
     aboutFn(dom);
 
     projectFn(dom);
+
+    contactFn(dom);
 
     stickyNavFn(dom);
 
