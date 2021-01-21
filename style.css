@@ -1634,7 +1634,6 @@ button{
 
     .project-content{
         font-size: 0.8rem;
-        overflow-y: scroll; ---->left here added overflow scroll to see the text content
     }
     
     .project-process-text{
