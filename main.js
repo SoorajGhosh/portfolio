@@ -755,7 +755,7 @@ class counterObj{
     }
 
 }
-const data1 = new counterObj('https://ipapi.co/json/');    // 1,000 requests per day
+// const data1 = new counterObj('https://ipapi.co/json/');    // 1,000 requests per day
 
 
 
@@ -772,7 +772,6 @@ function contactFn(domEl){
             zoom: 13,
             scrollWheelZoom: 'center',
             touchZoom: 'center',
-            dragging: false
         })
         
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -786,7 +785,6 @@ function contactFn(domEl){
 
 
     // =================CONTACT FORM=================    
-
     const sendContactMail = function(){     // just an object
         
     }

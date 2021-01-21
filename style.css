@@ -98,6 +98,16 @@ button{
     animation: gradient-animation 4s ease-in-out 0s infinite alternate;
 }
 
+.target-btn{
+    font-style: italic;
+    color: var(--primary-blue);    
+}
+
+.highlight-text{
+    font-weight: bold;
+    font-style: italic;
+}
+
 
 /* ===============NavBar==================== */
 .nav{
@@ -360,10 +370,7 @@ button{
     color: var(--primary-black);
 }
 
-.target-btn{
-    font-style: italic;
-    color: var(--primary-blue);    
-}
+
 
 /* =========================INTRO========================== */
 .intro{
@@ -415,6 +422,7 @@ button{
 .intro-text{
     width: 90%;
     font-size: 0.85rem;
+    font-style: italic;
     margin: 30px auto;
     text-align: justify;
     color: var(--primary-black);
@@ -686,7 +694,6 @@ button{
     padding: 15px;
     color: var(--primary-white);
     white-space: normal;
-    text-align: justify;
     vertical-align: top;
 }
 
@@ -701,10 +708,13 @@ button{
 }
 
 .about-card-content-text li{
-    margin: 10px;
+    margin-bottom: 10px;
+    padding: 10px 0px;
     font-size: 0.9rem;
     font-style: italic;
     font-weight: bold;
+    list-style-type: none;
+    border-bottom: 1px solid var(--primary-white);
 }
 
 .about-card-active .about-card-content{
@@ -1538,6 +1548,7 @@ button{
     }
 
     .about-card{
+        position: relative;
         border-radius: 15px;
         height: 300px;
         margin: auto 10px;
