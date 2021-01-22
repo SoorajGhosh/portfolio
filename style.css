@@ -136,8 +136,8 @@ button{
 .modal-close-btn{
     position: relative;
     display: block;
-    right: 4%;
-    top: 5%;
+    right: 2%;
+    top: 2%;
     width: 40px;
     height: 40px;
     border-radius: 5px;
@@ -145,40 +145,38 @@ button{
     margin: 5px 8px;
     cursor: pointer;
     transition: 400ms;
-    /* border: 1px solid black; */
-}
-
-.modal-close-btn:hover{
-    transform: scale(1.1);
 }
 
 .modal-cross{
     position: absolute;
-    width: 90%;
+    width: 100%;
     height: 6px;
+    top: 50%;
+    transform: translateY(-50%);
     background: var(--primary-white);
     border-radius: 20px;
-    margin: 11.5% 5%;
-    transition: 300ms;
+    transition: 50ms;
     border: 1px solid var(--primary-blue);
 }
 
 .modal-close-btn .modal-cross:nth-child(1){
-    position: absolute;
-    transform: rotate(44deg);
+    transform: rotate(45deg);
 }
 
 .modal-close-btn .modal-cross:nth-child(2){
-    position: absolute;
-    transform: rotate(-44deg);
+    transform: rotate(-45deg);
+}
+
+.modal-close-btn:hover .modal-cross{
+    background: var(--primary-black);
 }
 
 .modal-content{
-    position: relative;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    width: 85%;
+    width: 90%;
     height: 80%;
     padding: 10px;
     color: var(--primary-black);
@@ -1194,6 +1192,7 @@ button{
 
 .blog-content{
     margin: 5px;
+    text-align: justify;
 }
 
 
@@ -1365,7 +1364,7 @@ button{
     padding-right: 10px;
     margin-right: 10px;
     border: none;
-    border-right: 0.12rem solid var(--primary-grey);
+    border-right: 1px solid var(--primary-grey);
 }
 
 .address-text{
@@ -1812,7 +1811,7 @@ button{
     
 
     .contact-mail-form{
-        margin: 0px 15px;
+        margin: 0px 10px;
         padding: 0px 0px;
     }
 
@@ -1847,6 +1846,9 @@ button{
         width: 45px;
         padding-right: 5px;
         margin-right: 15px;
+    }
+
+    #telegram-img{
         border: none;
     }
 
