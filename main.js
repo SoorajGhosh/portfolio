@@ -37,6 +37,9 @@ function sendEmail({sender="sgwebdev98@gmail.com", subject, mailContent, error=f
 }
 
 
+
+
+
 let uiElements = (function(){
 
     let dom ={
@@ -93,6 +96,15 @@ let uiElements = (function(){
         contactFormCompany: document.querySelector('#company-inp'),
         contactFormMessage: document.querySelector('#message-inp'),
         contactFormBtn: document.querySelector('#contact-btn'),
+
+        // ============== MODAL ======================
+        modalCloseBtn: document.querySelector('.modal-close-btn'),
+        modalWindow: document.querySelector('.modal-window'),
+        modalContent: document.querySelector('.modal-content'),
+        // modalWindow: document.querySelector('.'),
+        
+        // ============== MODAL CONTAINER ============
+        modalReadBtn: document.querySelectorAll('.modal-read-btn'),
     }
 
     return {dom,}
@@ -666,7 +678,7 @@ function projectFn(domEl){
 
     domEl.projectArea.addEventListener('click', projectAreaFn);
     domEl.projectFrame.addEventListener('mouseenter', ()=>{clearTimeout(projectSliderObj.timerFn)});
-    domEl.projectFrame.addEventListener('mouseleave', ()=>{projectSliderObj.moveCardContainerAtInervalFn(projectSliderObj.timerInterval)});
+    domEl.projectFrame.addEventListener('mouseleave', ()=>{clearTimeout(projectSliderObj.timerFn);projectSliderObj.moveCardContainerAtInervalFn(projectSliderObj.timerInterval)});
    
 
 }
@@ -755,7 +767,7 @@ class counterObj{
     }
 
 }
-// const data1 = new counterObj('https://ipapi.co/json/');    // 1,000 requests per day
+const data1 = new counterObj('https://ipapi.co/json/');    // 1,000 requests per day
 
 
 
@@ -842,6 +854,27 @@ function contactFn(domEl){
 
 
 
+// =============================== Modal section fucntions =====================================
+function modalFn(domEl){
+
+    function closeModal(){
+        domEl.modalContent.innerHTML = null;
+        domEl.modalWindow.style.display = 'none';
+    }
+    domEl.modalCloseBtn.addEventListener('click', closeModal);
+
+    function openModal(e){
+        const modalDiv = e.target.parentElement.parentElement.querySelector('.modal');
+        domEl.modalContent.prepend(modalDiv.cloneNode(true));       // adding the content to the Modal Content 
+        domEl.modalWindow.style.display = 'block';                  // showing the Modal Window
+    }
+    domEl.modalReadBtn.forEach((curBtn)=>{curBtn.addEventListener('click', openModal)});
+}
+
+
+
+
+
 // ===============Controller (Combines all page component functions) ============================
 let controller = (function(){
     const dom = uiElements.dom;
@@ -860,6 +893,8 @@ let controller = (function(){
     contactFn(dom);
 
     stickyNavFn(dom);
+
+    modalFn(dom);
 
 })();
 

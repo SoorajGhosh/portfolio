@@ -65,7 +65,7 @@
 }
 
 
-/* ================PAGE CSS========================= */
+/* ================ GLOBAL CSS ========================= */
 
 html {
   box-sizing: border-box;
@@ -107,6 +107,96 @@ button{
     font-weight: bold;
     font-style: italic;
 }
+
+.content-shader{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgba( 255, 255, 255, 0.25 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 4px );
+    -webkit-backdrop-filter: blur( 4px );
+    border-radius: 10px;
+    border: 2px solid rgba( 255, 255, 255, 0.18 );
+    z-index: 1;
+}
+
+.modal-window{
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-close-btn{
+    position: relative;
+    display: block;
+    right: 4%;
+    top: 5%;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    float: right;
+    margin: 5px 8px;
+    cursor: pointer;
+    transition: 400ms;
+    /* border: 1px solid black; */
+}
+
+.modal-close-btn:hover{
+    transform: scale(1.1);
+}
+
+.modal-cross{
+    position: absolute;
+    width: 90%;
+    height: 6px;
+    background: var(--primary-white);
+    border-radius: 20px;
+    margin: 11.5% 5%;
+    transition: 300ms;
+    border: 1px solid var(--primary-blue);
+}
+
+.modal-close-btn .modal-cross:nth-child(1){
+    position: absolute;
+    transform: rotate(44deg);
+}
+
+.modal-close-btn .modal-cross:nth-child(2){
+    position: absolute;
+    transform: rotate(-44deg);
+}
+
+.modal-content{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 85%;
+    height: 80%;
+    padding: 10px;
+    color: var(--primary-black);
+    overflow-y: auto;
+    background: rgba( 255, 255, 255, 0.70 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 4px );
+    -webkit-backdrop-filter: blur( 4px );
+    border-radius: 10px;
+    border: 2px solid rgba( 255, 255, 255, 0.18 );
+}
+
+.modal-content > div{
+    top: 0%;
+    left: 0%;
+    transform: translate(0%,0%);
+}
+
 
 
 /* ===============NavBar==================== */
@@ -895,6 +985,30 @@ button{
     margin: 10px 40px;
     text-align: justify;
     color: var(--primary-black);
+}
+
+.process-btn{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-block;
+    color: var(--primary-white);
+    font-size: 1rem;
+    font-weight: bold;
+    margin: auto;
+    height: 40px;
+    width: 155px;
+    /* padding: 12px 55px; */
+    border: none;
+    font-size: 1rem;
+    border-radius: 4px;
+    background: var(--primary-blue-horizontal-gradient);
+    transition:  all .3s;
+    cursor: pointer;
+}
+
+.process-btn:hover{
+    transform: translateY(-50%) scale(1.1);
 }
 
 .project-learnings-list{
