@@ -100,6 +100,7 @@ button{
 
 .target-btn{
     font-style: italic;
+    font-weight: bold;
     color: var(--primary-blue);    
 }
 
@@ -131,6 +132,27 @@ button{
     transform: translate(-50%,-50%);
     z-index: 10;
     background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.modal-content{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%,10%);
+    width: 90%;
+    height: 90%;
+    padding: 10px;
+    color: var(--primary-black);
+    overflow-y: auto;
+    background: var(--primary-white);
+    border-radius: 10px;
+    cursor: default;
+}
+
+.modal-content > div{
+    top: 0%;
+    left: 0%;
+    transform: translate(0%,0%);
 }
 
 .modal-close-btn{
@@ -171,29 +193,30 @@ button{
     background: var(--primary-black);
 }
 
-.modal-content{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    width: 90%;
-    height: 80%;
-    padding: 10px;
-    color: var(--primary-black);
-    overflow-y: auto;
-    background: rgba( 255, 255, 255, 0.70 );
-    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-    backdrop-filter: blur( 4px );
-    -webkit-backdrop-filter: blur( 4px );
-    border-radius: 10px;
-    border: 2px solid rgba( 255, 255, 255, 0.18 );
+/* 
+.modal-content::-webkit-scrollbar {
+    width: 1px;
+	background-color: var(--primary-white);
 }
 
-.modal-content > div{
-    top: 0%;
-    left: 0%;
-    transform: translate(0%,0%);
+.modal-content::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    width: 2px;
+	background-color: var(--primary-white);
+    border-radius: 10px;
+    border: 1px solid black;
 }
+
+.modal-content::-webkit-scrollbar-thumb {
+    background-color: #555;
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: #000000;
+} */
+
+
 
 
 
@@ -659,29 +682,6 @@ button{
     width: 0px;
     background: transparent; 
 }
-/* 
-.about-container::-webkit-scrollbar {
-    width: 1px;
-	background-color: var(--primary-white);
-}
-
-.about-container::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    width: 2px;
-	background-color: var(--primary-white);
-    border-radius: 10px;
-    border: 1px solid black;
-}
-
-.about-container::-webkit-scrollbar-thumb {
-    background-color: #555;
-    border-radius: 10px;
-}
-
-.about-container::-webkit-scrollbar-thumb:hover {
-    background: #000000;
-} */
-
 
 /* make scrollbar transparent */
 .about-wrap::-webkit-scrollbar  {
@@ -1163,6 +1163,7 @@ button{
     height: 85%;
     width: 100%;
     border-radius: 0px 0px 10px 10px;
+    z-index: 1;
 }
 
 .blog-read-btn{
@@ -1191,9 +1192,35 @@ button{
 }
 
 .blog-content{
+    position: relative;
     margin: 5px;
     text-align: justify;
 }
+
+.blog-content-heading{
+    position: relative;
+    display: block;
+    margin: 30px auto;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.blog-content-para{
+    position: relative;
+    display: block;
+    margin: 20px auto;
+}
+
+.blog-para-head{
+    position: relative;
+    display: block;
+    font-size: 1.1rem;
+    font-weight: bold;
+    font-style: italic;
+    margin: 5px auto;
+}
+
 
 
 
@@ -1333,6 +1360,8 @@ button{
 /* =============MAP=============== */
 .map{
     grid-area: map;
+    position: relative;
+    z-index: 1;
     /* border: 1px solid var(--primary-black); */
 }
 

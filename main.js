@@ -857,11 +857,12 @@ function contactFn(domEl){
 // =============================== Modal section fucntions =====================================
 function modalFn(domEl){
 
-    function closeModal(){
+    function closeModal(e){
+        if (e.target.closest('.modal-content')) return; // only close if outside modal content
         domEl.modalContent.innerHTML = null;
         domEl.modalWindow.style.display = 'none';
     }
-    domEl.modalCloseBtn.addEventListener('click', closeModal);
+    domEl.modalWindow.addEventListener('click', closeModal);
 
     function openModal(e){
         const modalDiv = e.target.parentElement.parentElement.querySelector('.modal');
