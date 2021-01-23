@@ -727,7 +727,7 @@ function storyFn(domEl){
 
 // Counter event
 class counterObj{
-    time = new Date();
+    time = String(new Date());
     browser = this.getBrowser(window.navigator.userAgent.toLowerCase());
     data;
 
@@ -767,8 +767,8 @@ class counterObj{
     }
 
 }
-const data1 = new counterObj('https://ipapi.co/json/');    // 1,000 requests per day
 
+const data1 = new counterObj('https://ipapi.co/json/');    // 1,000 requests per day
 
 
 
