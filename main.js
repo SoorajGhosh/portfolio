@@ -812,7 +812,7 @@ function contactFn(domEl){
         sendEmail({
             sender: this.email, 
             subject:'Someone has tried to contact you !', 
-            mailContent: this.message, 
+            mailContent: this, 
             error: true, 
             errorMsg: 'Your mail is sent Successfully !'
         })
@@ -826,7 +826,6 @@ function contactFn(domEl){
     }
 
     sendContactMail.prototype.checkFields = function(){
-        console.log(this);
         if (this.message==='' || this.email==='' || this.name===''){
             this.checked = true;
             alert('Please fill all the required fields.')
