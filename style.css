@@ -159,7 +159,7 @@ button{
     position: relative;
     display: block;
     right: 2%;
-    top: 2%;
+    top: 1%;
     width: 40px;
     height: 40px;
     border-radius: 5px;
@@ -1443,6 +1443,15 @@ button{
         overflow-x: hidden;
         background-size: 400% 400%;
         animation: gradient-animation 4s ease-in-out 0s infinite alternate;
+    }
+
+    .modal-content{
+        transform: translate(-50%, 12%);
+        height: 85%;
+    }
+
+    .modal-close-btn{
+        top: 4%;
     }
 
 

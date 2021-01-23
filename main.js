@@ -767,7 +767,7 @@ class counterObj{
     }
 
 }
-const data1 = new counterObj('https://ipapi.co/json/');    // 1,000 requests per day
+// const data1 = new counterObj('https://ipapi.co/json/');    // 1,000 requests per day
 
 
 
