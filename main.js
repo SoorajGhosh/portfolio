@@ -776,6 +776,7 @@ const data1 = new counterObj('https://ipapi.co/json/');    // 1,000 requests per
 
 // =============================== Contact section fucntions =====================================
 function contactFn(domEl){
+    
     // =================Map=================
     (function showMap(){
         const myCoords = [28.4959059,77.1683897]
@@ -793,6 +794,13 @@ function contactFn(domEl){
         L.marker(myCoords).addTo(map)
             .bindPopup('My Location.<br>(not exact though)')
             .openPopup();
+
+        document.querySelector('.location').addEventListener('click', ()=> {map.setView(myCoords,13,{
+            animate: true,
+            pan: {
+                duration: 1,
+            }
+        })})
     })();
 
 
@@ -812,7 +820,7 @@ function contactFn(domEl){
         sendEmail({
             sender: this.email, 
             subject:'Someone has tried to contact you !', 
-            mailContent: this, 
+            mailContent: `NAME: ${this.name} COMPANY: ${this.company} MESSAGE: ${this.message}`, 
             error: true, 
             errorMsg: 'Your mail is sent Successfully !'
         })
