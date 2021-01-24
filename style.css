@@ -1301,6 +1301,10 @@ button{
     border-bottom: 0.124rem solid var(--primary-grey);
 }
 
+.contact-form-error-input:focus{
+    border-bottom: 0.124rem solid #e33f22;
+}
+
 .contact-form-textarea:focus{
     border: 0.124rem solid var(--primary-grey);
 }
@@ -1323,6 +1327,14 @@ button{
 .contact-form-btn:hover{
     transform: scale(1.1);
 }
+
+.contact-form-btn-sent{
+    background: #0ddb14;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: 300ms;
+}
+
 
 
 /* =============SOCIAL=============== */

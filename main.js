@@ -20,8 +20,8 @@ let mobileView, menu=true;
 
 // SMTP Mailing
 // const sendEmail = (sender="sgwebdev98@gmail.com", subject, mailContent, error=false, errorMsg=null) => {
-function sendEmail({sender="sgwebdev98@gmail.com", subject, mailContent, error=false, errorMsg=null}){
-    
+function sendEmail({sender="sgwebdev98@gmail.com", subject, mailContent, error=false, errorMsg=null, execAfterSent=()=>{}}){
+    // alert(errorMsg);
     Email.send({
         SecureToken : "d29ee32b-dbe5-438a-9f7b-89df840214ba",
         To : "backbenchersng@gmail.com",
@@ -30,7 +30,10 @@ function sendEmail({sender="sgwebdev98@gmail.com", subject, mailContent, error=f
         Body : mailContent,
     }).then(
         message => {
-            if (error) alert(errorMsg)
+            if (error) {
+                alert(errorMsg);
+                execAfterSent();
+            }
         }
     );
     
@@ -817,13 +820,20 @@ function contactFn(domEl){
     }
 
     sendContactMail.prototype.sendMail = function(){
+        domEl.contactFormBtn.classList.add('contact-form-btn-sent');
+        domEl.contactFormBtn.value = "Sent";
         sendEmail({
             sender: this.email, 
-            subject:'Someone has tried to contact you !', 
-            mailContent: `NAME: ${this.name} COMPANY: ${this.company} MESSAGE: ${this.message}`, 
+            subject:'Portfolio Form Message!', 
+            mailContent: `NAME: ${this.name}-----COMPANY: ${this.company}-----MESSAGE: ${this.message}`, 
             error: true, 
-            errorMsg: 'Your mail is sent Successfully !'
-        })
+            errorMsg: 'Your mail is sent Successfully !',
+            execAfterSent: function(){
+                domEl.contactFormBtn.classList.remove('contact-form-btn-sent');
+                domEl.contactFormBtn.value = "Submit";
+            }
+        });
+        
     };  
 
     sendContactMail.prototype.clearFields = function(){
@@ -831,6 +841,18 @@ function contactFn(domEl){
         domEl.contactFormEmail.value = "";
         domEl.contactFormCompany.value = "";
         domEl.contactFormMessage.value = "";
+        domEl.contactFormEmail.classList.remove('contact-form-error-input')
+    }
+
+    sendContactMail.prototype.emailValidation = function(){
+        const emailRegex = /\w*(\.|-)?\w+@\w*(\.|-)?\w+\.\w*/g;
+        let valid = emailRegex.test(this.email);
+        if (!valid){
+            alert('Enter Valid Email!');
+            domEl.contactFormEmail.classList.add('contact-form-error-input')
+            domEl.contactFormEmail.focus();
+        } 
+        return valid  // if true then only send msg otherwise send false
     }
 
     sendContactMail.prototype.checkFields = function(){
@@ -845,7 +867,7 @@ function contactFn(domEl){
     sendContactMail.prototype.init = function(){
         this.captureValues();
         this.checkFields();
-        if (this.checked) return     // checking if the fields are empty, and if they are then the guard clause doesnt allow other functions to be executed
+        if (this.checked || !this.emailValidation()) return     // checking if the fields are empty
         this.sendMail();
         this.clearFields();
     }
