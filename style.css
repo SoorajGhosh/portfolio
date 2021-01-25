@@ -29,26 +29,26 @@
 /* ======================SCROLLBAR========================= */
 
 /* 
-::-webkit-scrollbar {
-    width: 6px;
-	background-color: var(--primary-white);
+::-webkit-scrollbar{
+    position: absolute;
+    background: transparent;
+    width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: var(--primary-white);
+    background-color: transparent;
     border-radius: 10px;
-    border: 1px solid black;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #555;
+    background: var(--primary-blue-vertical-gradient);
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #000000;
+    -webkit-box-shadow: 0 0 10px var(--primary-blue);
 } */
+
 
 /* ==============================ANIMATIONS======================= */
 
@@ -74,6 +74,7 @@ html {
 
 body{
     position: relative;
+    height: 100vh;
 }
 
 li,
@@ -109,6 +110,11 @@ button{
     animation: gradient-animation 4s ease-in-out 0s infinite alternate;
 }
 
+.hide-container{
+    height: 100vh;
+    overflow: hidden;
+}
+
 .target-btn{
     font-style: italic;
     font-weight: bold;
@@ -133,6 +139,61 @@ button{
     z-index: 1;
 }
 
+
+/* ===================== OVERLAY =================== */
+
+.overlay{
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background: var(--primary-blue-horizontal-gradient);
+    background-size: 400% 400%;
+    animation: gradient-animation 4s ease-in-out 0s infinite alternate;
+    z-index: 1;
+    color: var(--primary-white);
+    transition: 1s ease-out;
+    overflow: hidden;
+}
+
+.remove-overlay{
+    height: 0vh;
+    opacity: 0.8;
+}
+
+.overlay-content{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: inline-block;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.main-caption{
+    position: relative;
+    display: block;
+    font-size: 1.8rem;
+    font-weight: bold;
+    font-style: italic;
+    margin: 5px;
+}
+
+.sub-caption{
+    position: relative;
+    float: right;
+    display: block;
+    font-size: 1.1rem;
+    font-weight: bold;
+    font-style: italic;
+    margin: 2px 5px;
+}
+
+
+
+/* ===================== MODAL =================== */
 .modal-window{
     position: fixed;
     height: 100vh;
@@ -142,7 +203,9 @@ button{
     left: 50%;
     transform: translate(-50%,-50%);
     z-index: 10;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(31, 37, 51, 0.5);
+    backdrop-filter: blur( 4px );
+    -webkit-backdrop-filter: blur( 4px );
     cursor: pointer;
 }
 
@@ -156,9 +219,30 @@ button{
     color: var(--primary-black);
     overflow-y: auto;
     background: var(--primary-white);
-    border-radius: 10px;
+    border-radius: 15px;
     cursor: default;
 }
+/* 
+.modal-content::-webkit-scrollbar{
+    background: transparent;
+    width: 12px;
+    border: 1px solid lawngreen;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 10px;
+    border: 1px solid hotpink;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: var(--primary-blue-vertical-gradient);
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    -webkit-box-shadow: 0 0 10px var(--primary-blue);
+} */
 
 .modal-content > div{
     top: 0%;
@@ -204,29 +288,6 @@ button{
     background: var(--primary-black);
 }
 
-/* 
-.modal-content::-webkit-scrollbar {
-    width: 1px;
-	background-color: var(--primary-white);
-}
-
-.modal-content::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    width: 2px;
-	background-color: var(--primary-white);
-    border-radius: 10px;
-    border: 1px solid black;
-}
-
-.modal-content::-webkit-scrollbar-thumb {
-    background-color: #555;
-    border-radius: 10px;
-}
-
-.modal-content::-webkit-scrollbar-thumb:hover {
-    background: #000000;
-} */
-
 
 
 
@@ -256,6 +317,7 @@ button{
     margin: 0px 10px;
     cursor: pointer;
     text-align: center;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 #top-nav-btn{
@@ -563,6 +625,8 @@ button{
     border-radius: 4px;
     background: var(--primary-blue-horizontal-gradient);
     transition:  all .6s;
+    background-size: 200% 200%;
+    animation: gradient-animation 4s ease-in-out 0s infinite alternate;
 }
 
 .intro-btn:hover {
@@ -610,8 +674,10 @@ button{
 .activate-time-year{
     color: var(--primary-white);
     border: 3px solid var(--primary-blue-horizontal-gradient);
-    background: var(--primary-blue-horizontal-gradient);
     transform: translateY(-50%) scale(1.2);
+    background: var(--primary-blue-horizontal-gradient);
+    background-size: 200% 200%;
+    animation: gradient-animation 4s ease-in-out 0s infinite alternate;
 }
 
 .time-summary{
@@ -911,6 +977,7 @@ button{
     cursor: pointer;
     transform: translateY(-50%);
     z-index: 1;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 .project-arrow img{
@@ -1014,6 +1081,8 @@ button{
     background: var(--primary-blue-horizontal-gradient);
     transition:  all .3s;
     cursor: pointer;
+    background-size: 200% 200%;
+    animation: gradient-animation 4s ease-in-out 0s infinite alternate;
 }
 
 .process-btn:hover{
@@ -1091,6 +1160,8 @@ button{
     cursor: pointer;
     border: 3px solid var(--primary-blue-horizontal-gradient);
     overflow: hidden;
+    background-size: 200% 200%;
+    animation: gradient-animation 4s ease-in-out 0s infinite alternate;
 }
 
 .project-btn:hover{
@@ -1322,6 +1393,8 @@ button{
     transition: 300ms;
     cursor: pointer;
     outline: none;
+    background-size: 200% 200%;
+    animation: gradient-animation 4s ease-in-out 0s infinite alternate;
 }
 
 .contact-form-btn:hover{
@@ -1404,9 +1477,7 @@ button{
 .address-info{
     position: relative;
     top: 25%;
-    /* top: 50%;
-    height: 100%;
-    transform: translateY(-50%); */
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
     float: left;
     display: inline-block;
     margin-right: 80px;
@@ -1469,6 +1540,14 @@ button{
         height: calc(var(--vh, 1vh) * 100);
     }
     
+    .main-caption{
+        font-size: 1.5rem;
+    }
+    
+    .sub-caption{
+        font-size: 0.9rem;
+    }
+
     .container{
         padding: 5px 0px;
         background: var(--primary-blue-vertical-gradient);
@@ -1483,6 +1562,10 @@ button{
         transform: translate(-50%, 12%);
         height: 85%;
     }
+        
+    /* .modal-content::-webkit-scrollbar{
+        display: none;
+    } */
 
     .modal-close-btn{
         top: 4%;
@@ -1543,6 +1626,7 @@ button{
         float: right;
         margin: 5px 8px;
         cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
     }
     
     .menu-btn-click{

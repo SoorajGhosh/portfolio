@@ -46,6 +46,12 @@ function sendEmail({sender="sgwebdev98@gmail.com", subject, mailContent, error=f
 let uiElements = (function(){
 
     let dom ={
+
+        container: document.querySelector('.container'),
+
+        // =============== OVERLAY ================
+        overlay: document.querySelector('.overlay'),
+
         menuBtn : document.querySelector('.menu-btn'),
         inner : document.querySelector('.inner'),
         nav : document.querySelector('.nav'),
@@ -905,6 +911,22 @@ function modalFn(domEl){
 
 
 
+// =============================== Overlay section fucntion =====================================
+function overlayFn(domEl){
+    function removeOverlay(){
+        setTimeout(() => {
+            domEl.overlay.classList.add('remove-overlay');
+            domEl.container.classList.remove('hide-container')
+        }, 5000);
+    }
+    window.addEventListener('load', removeOverlay)
+}
+
+
+
+
+
+
 // ===============Controller (Combines all page component functions) ============================
 let controller = (function(){
     const dom = uiElements.dom;
@@ -925,6 +947,8 @@ let controller = (function(){
     stickyNavFn(dom);
 
     modalFn(dom);
+
+    overlayFn(dom);
 
 })();
 
