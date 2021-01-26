@@ -156,12 +156,13 @@ button{
 }
 
 .remove-overlay{
-    height: 0vh;
+    transform: translateY(-100%);
     opacity: 0.8;
 }
 
 .overlay-content{
-    position: relative;
+    position: absolute;
+    visibility: hidden;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
@@ -179,6 +180,8 @@ button{
     font-weight: bold;
     font-style: italic;
     margin: 5px;
+    transition: 1000ms;
+    transform: translateX(100vw);
 }
 
 .sub-caption{
@@ -189,6 +192,12 @@ button{
     font-weight: bold;
     font-style: italic;
     margin: 2px 5px;
+    transition: 1000ms;
+    transform: translateX(-100vw);
+}
+
+.show-captions{
+    transform: translateX(0%);
 }
 
 

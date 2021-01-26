@@ -51,6 +51,9 @@ let uiElements = (function(){
 
         // =============== OVERLAY ================
         overlay: document.querySelector('.overlay'),
+        overlayContent: Array.from(document.querySelectorAll('.overlay-content')),
+        mainCaption: Array.from(document.querySelectorAll('.main-caption')),
+        subCaption : Array.from(document.querySelectorAll('.sub-caption')),
 
         menuBtn : document.querySelector('.menu-btn'),
         inner : document.querySelector('.inner'),
@@ -581,7 +584,7 @@ function aboutFn(domEl){
         cardContainer: domEl.aboutContainer, 
         actualCards: domEl.aboutCards, 
         slideMoveWidth: (mobileView?(domEl.aboutWrap.clientWidth/4.5):(domEl.aboutWrap.clientWidth)/2), 
-        defaultInterval: 5000, 
+        defaultInterval: 7000, 
         activeCardClassName: 'about-card-active', 
         dotContainer: document.querySelector('.about_dots_container'),
         cardType: 'about',
@@ -615,7 +618,7 @@ function projectFn(domEl){
         cardContainer: domEl.projectSlider, 
         actualCards: domEl.projectSlides, 
         slideMoveWidth: (domEl.projectFrame.clientWidth/2), 
-        defaultInterval: 7000, 
+        defaultInterval: 10000, 
         activeCardClassName: 'project-slide-active', 
         dotContainer: document.querySelector('.project_dots_container'),
         cardType: 'project',
@@ -901,7 +904,7 @@ function modalFn(domEl){
 
     function openModal(e){
         const modalDiv = e.target.parentElement.parentElement.querySelector('.modal');
-        domEl.modalContent.prepend(modalDiv.cloneNode(true));       // adding the content to the Modal Content 
+        domEl.modalContent.prepend(modalDiv.cloneNode(true));       // adding the content to the Modal Caption 
         domEl.modalWindow.style.display = 'block';                  // showing the Modal Window
     }
     domEl.modalReadBtn.forEach((curBtn)=>{curBtn.addEventListener('click', openModal)});
@@ -913,13 +916,30 @@ function modalFn(domEl){
 
 // =============================== Overlay section fucntion =====================================
 function overlayFn(domEl){
+    
+    const randomCaptionNumber = Math.floor(Math.random() * domEl.overlayContent.length);
+
+    (function showOverlayContent(){
+        domEl.overlayContent[randomCaptionNumber].style.visibility = "visible";
+        domEl.mainCaption[randomCaptionNumber].style.transform ='translateX(0%)';
+        domEl.subCaption[randomCaptionNumber].style.transform ='translateX(0%)';
+    })();
+
+    function removeOverlayContent(){
+        domEl.mainCaption[randomCaptionNumber].style.transform ='translateX(-100vw)';
+        domEl.subCaption[randomCaptionNumber].style.transform ='translateX(100vw)';
+        domEl.overlayContent[randomCaptionNumber].style.visibility = "hidden";
+    };
+    setTimeout(() => {removeOverlayContent()},5000)
+
     function removeOverlay(){
         setTimeout(() => {
             domEl.overlay.classList.add('remove-overlay');
-            domEl.container.classList.remove('hide-container')
-        }, 5000);
+            domEl.container.classList.remove('hide-container');
+            setTimeout(() => {domEl.overlay.style.display = 'none'},1000)   // this is required otherwise a horizontal scroll will be added and 1000s is also needed as the transition time must match with the display none time otherwise it will vanish in between transition effect
+        }, 6000);
     }
-    window.addEventListener('load', removeOverlay)
+    window.addEventListener('load', removeOverlay);
 }
 
 
